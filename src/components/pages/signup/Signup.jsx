@@ -1,27 +1,56 @@
 import { Box, TextField, Grid, Typography, Button, MenuItem, IconButton, InputAdornment } from "@mui/material"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/system';
 import { useFormik } from 'formik';
-import { countriesData } from '../../../utils/countries';
 import signupValidation from './validation';
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../../firebase";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { ImageUploader } from "../../../api";
+import { toast } from "react-hot-toast";
+import Loading from '../../loading/Loading';
+
 const Signup = () => {
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfPassword, setShowConfPassword] = useState(false);
-    const { values, handleBlur, handleChange, handleSubmit, errors, touched } = useFormik({
+    const [openLoading, setOpenLoading] = useState(false);
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+    const { values, handleBlur, handleChange, handleSubmit, errors, touched, setFieldValue } = useFormik({
         initialValues: {
             name: "",
             email: "",
             password: "",
             confirmPassword: "",
-            city: "",
-            country: "",
-            role: ""
+            address: "",
+            role: "",
+            file: "",
         },
         validationSchema: signupValidation,
-        onSubmit: values => {
-            console.log(values);
+        onSubmit: async values => {
+            if (values.password !== values.confirmPassword) {
+                return toast.error("Password and Confirm Password are dfferent");
+            }
+            try {
+                setOpenLoading(true);
+                const ImgUrl = await ImageUploader(values["file"]);
+                delete values["file"];
+                const resp = await createUserWithEmailAndPassword(auth, values.email, values.password)
+                await setDoc(doc(db, "users", resp.user.uid), {
+                    ...values, ImgUrl,
+                });
+                navigate("/login");
+                toast.success("Account created successfully");
+                setOpenLoading(false);
+
+            } catch (error) {
+                setOpenLoading(false);
+                console.log(error.message)
+            };
         }
     })
 
@@ -37,9 +66,20 @@ const Signup = () => {
                     >
                         Sign up
                     </Typography>
-
                     <form onSubmit={handleSubmit}>
-                        <Grid container spacing={1}  >
+                        <Grid container spacing={2}  >
+                            <Grid item xs={12} lg={11}>
+                                <Stack direction="row" alignItems="flex-end" >
+                                    <img alt='user Image' src={values.file ? URL.createObjectURL(values.file) : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
+                                    <Button variant='text' component="label" >
+                                        Upload file
+                                        <input
+                                            name='file'
+                                            onChange={(e) => setFieldValue("file", e.target.files[0])}
+                                            hidden type="file" />
+                                    </Button>
+                                </Stack>
+                            </Grid>
                             <Grid item xs={12} lg={11}>
                                 <TextField
                                     type="text"
@@ -119,6 +159,20 @@ const Signup = () => {
                             <Grid item xs={12} lg={11}>
                                 <TextField
                                     type="text"
+                                    name='address'
+                                    label="Address"
+                                    fullWidth
+                                    value={values.address}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    helperText={touched.address && errors.address}
+                                    error={touched.address && Boolean(errors.address)}
+                                />
+                            </Grid>
+
+                            {/* <Grid item xs={12} lg={11}>
+                                <TextField
+                                    type="text"
                                     name='city'
                                     label="City"
                                     fullWidth
@@ -145,7 +199,7 @@ const Signup = () => {
                                         <MenuItem key={country.name} value={country.name}>{country.name}</MenuItem>
                                     ))}
                                 </TextField>
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={12} lg={11}>
                                 <TextField
                                     select
@@ -177,6 +231,7 @@ const Signup = () => {
                     </form>
                 </Grid>
             </Grid>
+            <Loading {...{ openLoading, setOpenLoading }} />
         </Box>
     )
 }

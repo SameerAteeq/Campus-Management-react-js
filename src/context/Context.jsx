@@ -3,15 +3,11 @@ import Reducer from "./Reducer";
 const INITIAL_VALUE = {
     currentUser: null
 }
-const Context = createContext(INITIAL_VALUE);
-export const contextValue = () => {
-    return useContext(Context);
-}
-
+export const Context = createContext(INITIAL_VALUE);
 const ContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(Reducer, INITIAL_VALUE);
     return (
-        <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
+        <Context.Provider value={{ currentUser: state.currentUser, dispatch }}>{children}</Context.Provider>
     )
 }
 export default ContextProvider;

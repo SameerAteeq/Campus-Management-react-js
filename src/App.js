@@ -11,9 +11,11 @@ import { ThemeProvider } from '@mui/material'
 import Dashboard from './components/pages/dashboard/Dashboard'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { Toaster } from 'react-hot-toast';
 const App = () => {
   return (
     <BrowserRouter>
+      <Toaster />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeProvider theme={theme}>
           <Routes>

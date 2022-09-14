@@ -1,21 +1,25 @@
 import React, { useState } from 'react'
 import { Box, TextField, Grid, Typography, FormControl, Button, InputAdornment, IconButton, OutlinedInput, InputLabel } from "@mui/material"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/system';
 import { useFormik } from 'formik';
 import LoginValidation from './LoginValidation';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-
+import { Context } from '../../../context/Context';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../../firebase';
+import Loading from '../../loading/Loading';
+import { toast } from 'react-hot-toast';
+import { useContext } from 'react';
 const Login = () => {
-    const [showPassword, setShowPassword] = useState(false)
-
+    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const [openLoading, setOpenLoading] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    const { dispatch } = useContext(Context);
 
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } = useFormik({
         initialValues: {
@@ -23,8 +27,20 @@ const Login = () => {
             password: "",
         },
         validationSchema: LoginValidation,
-        onSubmit: values => {
-            console.log(values);
+        onSubmit: async values => {
+            setOpenLoading(true)
+            signInWithEmailAndPassword(auth, values.email, values.password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    setOpenLoading(false);
+                    navigate("/");
+                    toast.success("Account successfully Login");
+                    dispatch({ type: "LOGIN", payload: user })
+                })
+                .catch((error) => {
+                    console.log(error)
+                    setOpenLoading(false);
+                });
         }
     })
     return (
@@ -42,7 +58,7 @@ const Login = () => {
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={1} >
                             <Grid item xs={12} >
-                                <OutlinedInput
+                                <TextField
                                     type="email"
                                     name='email'
                                     value={values.email}
@@ -56,7 +72,6 @@ const Login = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    id="outlined-adornment-password"
                                     type={showPassword ? 'text' : 'password'}
                                     name='password'
                                     value={values.password}
@@ -92,6 +107,7 @@ const Login = () => {
                     </form>
                 </Grid>
             </Grid >
+            <Loading {...{ openLoading, setOpenLoading }} />
         </Box >
     )
 }

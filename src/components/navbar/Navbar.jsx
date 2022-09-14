@@ -2,35 +2,37 @@ import AppBar from '@mui/material/AppBar';
 import { Box, Divider, Drawer, IconButton, List, Button, ListItem, ListItemText, ListItemButton, ListItemIcon, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useMemo, useState } from 'react';
-// import Button from '@mui/material/Button'
+import { useContext, useMemo, useState } from 'react';
+import { Context } from '../../context/Context';
 const drawerWidth = 240;
 const Navbar = (props) => {
+    const { currentUser } = useContext(Context);
     const navigate = useNavigate();
-    const navItems = useMemo(
-        () => [
-            {
-                id: 1,
-                title: "Home",
-                to: "/"
-            },
-            {
-                id: 2,
-                title: "Dashboard",
-                to: `/dashboard`
-            },
-            {
-                id: 3,
-                title: "Jobs",
-                to: `/jobs`
-            },
-            {
-                id: 4,
-                title: "Login",
-                to: `/login`
-            },
-        ]
-    )
+    const navItems = [
+
+        {
+            id: 1,
+            title: "Home",
+            to: "/"
+        },
+        {
+            id: 2,
+            title: "Dashboard",
+            to: `/dashboard`
+        },
+
+        {
+            id: 3,
+            title: "Jobs",
+            to: `/jobs`
+        },
+        {
+            id: 4,
+            title: "Login",
+            to: `/login`
+        },
+    ]
+
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
 
