@@ -9,25 +9,25 @@ import Signup from './components/pages/signup/Signup'
 import { theme } from './components/theme/theme'
 import { ThemeProvider } from '@mui/material'
 import Dashboard from './components/pages/dashboard/Dashboard'
-// import { LocalizationProvider } from '@mui/x-date-pickers'
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 const App = () => {
   return (
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        {/* <LocalizationProvider dateAdatper={AdapterDateFns}> */}
-        <Routes>
-          <Route path='/' element={<Mainheader />} >
-            <Route index element={<Home />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/jobs' element={<Jobs />} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/login' element={<Login />} />
-          </Route>
-          <Route path='/dashboard/*' element={<Dashboard />} />
-        </Routes>
-        {/* </LocalizationProvider> */}
-      </ThemeProvider>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route path='/' element={<Mainheader />} >
+              <Route index element={<Home />} />
+              <Route path='/about' element={<About />} />
+              <Route path='/jobs' element={<Jobs />} />
+              <Route path='/signup' element={<Signup />} />
+              <Route path='/login' element={<Login />} />
+            </Route>
+            <Route path='/dashboard/*' element={<Dashboard />} />
+          </Routes>
+        </ThemeProvider>
+      </LocalizationProvider>
     </BrowserRouter >
   )
 }

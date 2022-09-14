@@ -1,10 +1,14 @@
-import { Box, TextField, Grid, Typography, Button, MenuItem } from "@mui/material"
+import { Box, TextField, Grid, Typography, Button, MenuItem, IconButton, InputAdornment } from "@mui/material"
 import { Link } from 'react-router-dom';
 import { Stack } from '@mui/system';
 import { useFormik } from 'formik';
 import { countriesData } from '../../../utils/countries';
 import signupValidation from './validation';
+import { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 const Signup = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfPassword, setShowConfPassword] = useState(false);
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } = useFormik({
         initialValues: {
             name: "",
@@ -41,7 +45,6 @@ const Signup = () => {
                                     type="text"
                                     name='name'
                                     fullWidth
-                                    variant='filled'
                                     label=" Name"
                                     value={values.name}
                                     onChange={handleChange}
@@ -55,7 +58,6 @@ const Signup = () => {
                                     type="email"
                                     name='email'
                                     label="Email"
-                                    variant='filled'
                                     fullWidth
                                     value={values.email}
                                     onChange={handleChange}
@@ -66,30 +68,52 @@ const Signup = () => {
                             </Grid>
                             <Grid item xs={12} lg={11}>
                                 <TextField
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     name='password'
                                     label="Password"
-                                    variant='filled'
                                     fullWidth
                                     value={values.password}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     error={touched.password && Boolean(errors.password)}
                                     helperText={touched.password && errors.password}
+                                    InputProps={{
+                                        endAdornment:
+                                            <InputAdornment position="end">
+                                                <IconButton aria-label="toggle password visibility"
+                                                    onClick={() => setShowPassword(!showPassword)}
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} lg={11}>
                                 <TextField
-                                    type="password"
+                                    type={showConfPassword ? "text" : "password"}
                                     name='confirmPassword'
                                     label="Confirm password"
-                                    variant='filled'
                                     fullWidth
                                     value={values.confirmPassword}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     error={touched.confirmPassword && Boolean(errors.confirmPassword)}
                                     helperText={touched.confirmPassword && errors.confirmPassword}
+                                    InputProps={{
+                                        endAdornment:
+                                            <InputAdornment position="end">
+                                                <IconButton aria-label="toggle password visibility"
+                                                    onClick={() => setShowConfPassword(!showConfPassword)}
+                                                    edge="end"
+                                                >
+                                                    {showConfPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} lg={11}>
@@ -97,7 +121,6 @@ const Signup = () => {
                                     type="text"
                                     name='city'
                                     label="City"
-                                    variant='filled'
                                     fullWidth
                                     value={values.city}
                                     onChange={handleChange}
@@ -111,7 +134,6 @@ const Signup = () => {
                                     select
                                     name='country'
                                     label="Select Country"
-                                    variant='filled'
                                     fullWidth
                                     value={values.country}
                                     onChange={handleChange}
@@ -129,7 +151,6 @@ const Signup = () => {
                                     select
                                     name='role'
                                     label="Role"
-                                    variant='filled'
                                     fullWidth
                                     value={values.role}
                                     onChange={handleChange}

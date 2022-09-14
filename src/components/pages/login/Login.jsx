@@ -1,11 +1,22 @@
 import React, { useState } from 'react'
-import { Box, TextField, Grid, Typography, FormControl, Button } from "@mui/material"
+import { Box, TextField, Grid, Typography, FormControl, Button, InputAdornment, IconButton, OutlinedInput, InputLabel } from "@mui/material"
 import { Link } from 'react-router-dom';
 import { Stack } from '@mui/system';
 import { useFormik } from 'formik';
 import LoginValidation from './LoginValidation';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const Login = () => {
+    const [showPassword, setShowPassword] = useState(false)
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } = useFormik({
         initialValues: {
             email: "",
@@ -31,8 +42,7 @@ const Login = () => {
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={1} >
                             <Grid item xs={12} >
-
-                                <TextField
+                                <OutlinedInput
                                     type="email"
                                     name='email'
                                     value={values.email}
@@ -40,29 +50,38 @@ const Login = () => {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     helperText={touched.email && errors.email}
-                                    variant='filled'
                                     label="Email"
                                     fullWidth
                                 />
                             </Grid>
                             <Grid item xs={12}>
-
                                 <TextField
-                                    type="password"
+                                    id="outlined-adornment-password"
+                                    type={showPassword ? 'text' : 'password'}
                                     name='password'
                                     value={values.password}
                                     error={touched.password && Boolean(errors.password)}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     helperText={touched.password && errors.password}
-                                    label="Password"
-                                    variant='filled'
                                     fullWidth
+                                    InputProps={{
+                                        endAdornment:
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                    }}
+                                    label="Password"
 
                                 />
                             </Grid>
                             <Grid item xs={12}>
-
                                 <Button type="submit" variant='contained' fullWidth>Login</Button>
                             </Grid>
                         </Grid>

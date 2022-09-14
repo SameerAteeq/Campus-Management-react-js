@@ -1,9 +1,11 @@
-import { ChevronLeft, Dashboard, Inbox, Leaderboard, Mail, PostAdd, StarBorder } from '@mui/icons-material';
+import { ChevronLeft, Dashboard, Group, Inbox, Leaderboard, Mail, Person, PostAdd, StarBorder } from '@mui/icons-material';
 import { IconButton, Divider, List, ListItem, ListItemButton, Box, Typography, ListItemIcon, ListItemText, styled, Paper, Collapse, Tooltip } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
 import { useMemo, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import Candidate from '../candidate/Candidate';
 import Main from '../main/Main';
+import Profile from '../profile/Profile';
 import Manage from '../vacancy/Manage';
 import PostVacancy from '../vacancy/PostVacancy';
 const drawerWidth = 240;
@@ -65,8 +67,10 @@ const Sidebar = ({ open, setOpen }) => {
         () =>
             [
                 { title: "Main", icon: <Dashboard />, link: "", components: <Main {...{ setSelectedLink, link: '' }} />, tooltip: "Dashboard" },
+                { title: "Profile", icon: < Person />, link: "Profile", components: <Profile {...{ setSelectedLink, link: '' }} />, tooltip: "Profile" },
                 { title: "Add Vacancy", icon: <PostAdd />, link: "Vacancy", components: <PostVacancy {...{ setSelectedLink, link: "vacancy" }} />, tooltip: "Add Vacancy" },
                 { title: "Manage Vacancy", icon: <Leaderboard />, link: "Manage", components: <Manage {...{ setSelectedLink, link: "Manage" }} />, tooltip: "Manage Vacancy" },
+                { title: "Candidates", icon: <Group />, link: "Candidate_list", components: <Candidate {...{ setSelectedLink, link: "Manage" }} />, tooltip: "Candidate" },
             ],
         [],
     );
