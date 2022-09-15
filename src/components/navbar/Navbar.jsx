@@ -1,36 +1,48 @@
 import AppBar from '@mui/material/AppBar';
 import { Box, Divider, Drawer, IconButton, List, Button, ListItem, ListItemText, ListItemButton, ListItemIcon, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useContext, useMemo, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from 'react';
 import { Context } from '../../context/Context';
+import toast from 'react-hot-toast';
+import User from '../user/User';
 const drawerWidth = 240;
 const Navbar = (props) => {
-    const { currentUser } = useContext(Context);
+    const { currentUser, dispatch } = useContext(Context);
+    console.log(currentUser, "user")
     const navigate = useNavigate();
     const navItems = [
-
         {
             id: 1,
             title: "Home",
-            to: "/"
+            to: "/",
+            private: false
         },
         {
             id: 2,
             title: "Dashboard",
-            to: `/dashboard`
+            to: `/dashboard`,
+            private: true
         },
 
         {
             id: 3,
             title: "Jobs",
-            to: `/jobs`
+            to: `/jobs`,
+            private: false
         },
-        {
-            id: 4,
-            title: "Login",
-            to: `/login`
-        },
+        // {
+        //     id: 4,
+        //     title: "Login",
+        //     to: `/login`,
+        //     private: false,
+        // },
+        // {
+        //     id: 5,
+        //     title: "Logout",
+        //     to: `/login`,
+        //     private: true,
+        // },
     ]
 
     const { window } = props;
@@ -39,6 +51,10 @@ const Navbar = (props) => {
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+    const handleLogout = () => {
+        dispatch({ type: "LOGOUT", currentUser: null });
+        toast.success("Account Logout successfully");
+    }
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -47,16 +63,26 @@ const Navbar = (props) => {
             </Typography>
             <Divider />
             <List>
-                {navItems.map((item) => (
-                    <ListItem key={item.id} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate(item.to)}>
-                            <ListItemText primary={item.title} />
-                            <ListItemIcon>
-
-                            </ListItemIcon>
+                {navItems.map((item) => {
+                    if (item.private && !currentUser) return
+                    return (
+                        <ListItem key={item.id} disablePadding>
+                            <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate(item.to)}>
+                                <ListItemText primary={item.title} />
+                            </ListItemButton>
+                        </ListItem>)
+                })}
+                <ListItem disablePadding>
+                    {currentUser ?
+                        <ListItemButton sx={{ textAlign: 'center' }} onClick={handleLogout}>
+                            <ListItemText primary="Logout" />
+                        </ListItemButton> :
+                        <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate("/login")}>
+                            <ListItemText primary="Login" />
                         </ListItemButton>
-                    </ListItem>
-                ))}
+                    }
+                </ListItem>
+
             </List>
         </Box>
     );
@@ -86,12 +112,19 @@ const Navbar = (props) => {
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
 
-                        {navItems.map((item) => (
-                            <Button key={item.id} sx={{ color: '#fff' }} onClick={() => navigate(item.to)}>
-                                {item.title}
-                            </Button>
-                        ))}
+                        {navItems.map((item) => {
+                            if (item.private && !currentUser) return
+                            return (
 
+                                <Button key={item.id} sx={{ color: '#fff' }} onClick={() => navigate(item.to)}>
+                                    {item.title}
+                                </Button>
+                            )
+                        })}
+                        {currentUser ?
+                            <User /> : <Button sx={{ color: '#fff' }} onClick={() => navigate("/login")}>
+                                Login
+                            </Button>}
                     </Box>
                 </Toolbar>
             </AppBar>

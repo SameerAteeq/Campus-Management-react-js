@@ -7,10 +7,11 @@ import LoginValidation from './LoginValidation';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Context } from '../../../context/Context';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../../../firebase';
+import { auth, db } from '../../../firebase';
 import Loading from '../../loading/Loading';
 import { toast } from 'react-hot-toast';
 import { useContext } from 'react';
+import { doc, getDoc } from 'firebase/firestore';
 const Login = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
@@ -27,15 +28,24 @@ const Login = () => {
             password: "",
         },
         validationSchema: LoginValidation,
-        onSubmit: async values => {
+        onSubmit: values => {
             setOpenLoading(true)
             signInWithEmailAndPassword(auth, values.email, values.password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
+                .then(async (userCredential) => {
+                    const userResp = userCredential.user;
+                    const docRef = doc(db, "users", userResp.uid);
+                    const docSnap = await getDoc(docRef);
+                    console.log(docSnap, "data");
+                    const fetchSingleUser = docSnap.data();
+                    const userData = {
+                        id: userResp.uid,
+                        ...fetchSingleUser
+                    }
+                    dispatch({ type: "LOGIN", payload: userData })
                     setOpenLoading(false);
                     navigate("/");
                     toast.success("Account successfully Login");
-                    dispatch({ type: "LOGIN", payload: user })
+                    console.log("user", fetchSingleUser);
                 })
                 .catch((error) => {
                     console.log(error)
@@ -88,7 +98,7 @@ const Login = () => {
                                                     onClick={handleClickShowPassword}
                                                     edge="end"
                                                 >
-                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    {showPassword ? <Visibility /> : <VisibilityOff />}
                                                 </IconButton>
                                             </InputAdornment>
                                     }}

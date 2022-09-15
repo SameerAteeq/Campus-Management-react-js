@@ -11,7 +11,7 @@ const Reducer = (state, action) => {
             }
         }
         default:
-            throw new Error("No action matched!")
+            { return state; }
     }
 }
 export default Reducer;

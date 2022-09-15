@@ -1,17 +1,14 @@
-import { Box, Button, Divider, Grid, InputLabel, TextareaAutosize, TextField, Typography } from '@mui/material'
+import { Box, Button, Divider, Grid, InputLabel, TextField, Typography } from '@mui/material'
 import { DesktopDatePicker } from '@mui/x-date-pickers'
-import React, { useEffect, useState } from 'react'
-import DateFnsAdapter from "@date-io/date-fns";
-const PostVacancy = ({ setSelectedLink, link }) => {
+import React, { useState } from 'react'
+const PostVacancy = () => {
     const [value, setValue] = useState(null);
     const defaultValue = value ? value : new Date();
 
     const handleChange = (newValue) => {
         setValue(newValue);
     };
-    useEffect(() => {
-        setSelectedLink(link)
-    }, [])
+
 
     return (
         <Box sx={{ backgroundColor: "#fff", padding: { xs: "5px", sm: "10px", lg: "20px" } }}>

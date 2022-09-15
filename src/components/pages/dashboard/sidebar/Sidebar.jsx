@@ -1,13 +1,9 @@
-import { ChevronLeft, Dashboard, Group, Inbox, Leaderboard, Mail, Person, PostAdd, StarBorder } from '@mui/icons-material';
-import { IconButton, Divider, List, ListItem, ListItemButton, Box, Typography, ListItemIcon, ListItemText, styled, Paper, Collapse, Tooltip } from '@mui/material';
+import { Divider, List, ListItem, ListItemButton, Box, Typography, ListItemIcon, ListItemText, styled, Tooltip } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
 import { useMemo, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import Candidate from '../candidate/Candidate';
-import Main from '../main/Main';
-import Profile from '../profile/Profile';
-import Manage from '../vacancy/Manage';
-import PostVacancy from '../vacancy/PostVacancy';
+import { list } from "../../../../utils/SidebarData"
+
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
     width: drawerWidth,
@@ -35,7 +31,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
 }));
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -63,17 +58,8 @@ const Sidebar = ({ open, setOpen }) => {
     };
     const [selectedLink, setSelectedLink] = useState('');
     const navigate = useNavigate();
-    const list = useMemo(
-        () =>
-            [
-                { title: "Main", icon: <Dashboard />, link: "", components: <Main {...{ setSelectedLink, link: '' }} />, tooltip: "Dashboard" },
-                { title: "Profile", icon: < Person />, link: "Profile", components: <Profile {...{ setSelectedLink, link: '' }} />, tooltip: "Profile" },
-                { title: "Add Vacancy", icon: <PostAdd />, link: "Vacancy", components: <PostVacancy {...{ setSelectedLink, link: "vacancy" }} />, tooltip: "Add Vacancy" },
-                { title: "Manage Vacancy", icon: <Leaderboard />, link: "Manage", components: <Manage {...{ setSelectedLink, link: "Manage" }} />, tooltip: "Manage Vacancy" },
-                { title: "Candidates", icon: <Group />, link: "Candidate_list", components: <Candidate {...{ setSelectedLink, link: "Manage" }} />, tooltip: "Candidate" },
-            ],
-        [],
-    );
+
+
 
     return (
         <>
@@ -96,7 +82,6 @@ const Sidebar = ({ open, setOpen }) => {
                                         px: 2.5,
                                     }}
                                     onClick={() => navigate(item.link)}
-                                    selected={selectedLink === item.link}
                                 >
                                     <ListItemIcon
                                         sx={{

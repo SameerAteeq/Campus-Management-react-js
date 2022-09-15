@@ -49,7 +49,7 @@ const Signup = () => {
 
             } catch (error) {
                 setOpenLoading(false);
-                console.log(error.message)
+                toast.error(error.message)
             };
         }
     })

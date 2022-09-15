@@ -1,15 +1,14 @@
 import { BarChart, Group } from '@mui/icons-material'
 import { Box, Grid, Stack, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
-
-const Main = ({ setSelectedLink, link }) => {
-    useEffect(() => {
-        setSelectedLink(link)
-    }, [])
+import React from 'react'
+import { useContext } from 'react'
+import { Context } from '../../../../context/Context';
+const Main = () => {
+    const { currentUser } = useContext(Context);
     return (
         <>
             <Typography variant='h6' sx={{ mb: "20px" }}>
-                Welcome, company Name
+                Welcome, {currentUser.name}
             </Typography>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={5} lg={5}>

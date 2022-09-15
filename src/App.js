@@ -12,7 +12,10 @@ import Dashboard from './components/pages/dashboard/Dashboard'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { Toaster } from 'react-hot-toast';
+import CandidateProfile from './components/pages/dashboard/candidate/CandidateProfile'
+
 const App = () => {
+
   return (
     <BrowserRouter>
       <Toaster />
@@ -25,8 +28,11 @@ const App = () => {
               <Route path='/jobs' element={<Jobs />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/login' element={<Login />} />
+              <Route path='/candidate' element={<CandidateProfile />} />
             </Route>
-            <Route path='/dashboard/*' element={<Dashboard />} />
+            <Route path='/dashboard/*' element={<Dashboard />} >
+            </Route>
+
           </Routes>
         </ThemeProvider>
       </LocalizationProvider>
