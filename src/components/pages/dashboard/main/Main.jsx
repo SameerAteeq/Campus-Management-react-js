@@ -2,9 +2,9 @@ import { BarChart, Group } from '@mui/icons-material'
 import { Box, Grid, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { useContext } from 'react'
-import { Context } from '../../../../context/Context';
+import { UserContext } from '../../../../context/Context';
 const Main = () => {
-    const { currentUser } = useContext(Context);
+    const { currentUser } = useContext(UserContext);
     return (
         <>
             <Typography variant='h6' sx={{ mb: "20px" }}>

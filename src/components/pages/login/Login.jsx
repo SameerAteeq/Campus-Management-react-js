@@ -5,7 +5,7 @@ import { Stack } from '@mui/system';
 import { useFormik } from 'formik';
 import LoginValidation from './LoginValidation';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Context } from '../../../context/Context';
+import { UserContext } from '../../../context/Context';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../../../firebase';
 import Loading from '../../loading/Loading';
@@ -20,7 +20,7 @@ const Login = () => {
         setShowPassword(!showPassword);
     };
 
-    const { dispatch } = useContext(Context);
+    const { dispatch } = useContext(UserContext);
 
     const { values, handleBlur, handleChange, handleSubmit, errors, touched } = useFormik({
         initialValues: {
@@ -33,17 +33,18 @@ const Login = () => {
             signInWithEmailAndPassword(auth, values.email, values.password)
                 .then(async (userCredential) => {
                     const userResp = userCredential.user;
+                    console.log("userResp", userResp)
                     const docRef = doc(db, "users", userResp.uid);
                     const docSnap = await getDoc(docRef);
-                    console.log(docSnap, "data");
                     const fetchSingleUser = docSnap.data();
+                    console.log("data", fetchSingleUser);
                     const userData = {
                         id: userResp.uid,
                         ...fetchSingleUser
                     }
                     dispatch({ type: "LOGIN", payload: userData })
                     setOpenLoading(false);
-                    navigate("/");
+                    navigate("/Dashboard");
                     toast.success("Account successfully Login");
                     console.log("user", fetchSingleUser);
                 })

@@ -1,13 +1,17 @@
 import { Logout, PersonAdd, Settings } from '@mui/icons-material'
-import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip } from '@mui/material'
+import { Avatar, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material'
 import React, { useState } from 'react'
 import { useContext } from 'react'
 import toast from 'react-hot-toast'
-import { Context } from '../../context/Context'
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../../context/Context'
+import Loading from '../loading/Loading'
 
 const User = () => {
-    const { currentUser, dispatch } = useContext(Context);
+    const navigate = useNavigate();
+    const { currentUser, dispatch } = useContext(UserContext);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [openLoading, setOpenLoading] = useState(false);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -16,7 +20,9 @@ const User = () => {
         setAnchorEl(null);
     };
     const handleLogOut = () => {
+        setOpenLoading(true)
         dispatch({ type: "LOGOUT", currentUser: null });
+        setOpenLoading(false);
         toast.success("Account Logout successfully");
     }
     return (
@@ -30,7 +36,7 @@ const User = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                 >
-                    <Avatar src={currentUser.ImgUrl || '.'} sx={{ width: 32, height: 32 }} />
+                    <Avatar src='.' sx={{ width: 32, height: 32 }} />
                 </IconButton>
             </Tooltip>
             <Menu
@@ -63,24 +69,17 @@ const User = () => {
                             transform: 'translateY(-50%) rotate(45deg)',
                             zIndex: 0,
                         },
+                        width: "200px"
                     },
                 }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem>
-                    <Avatar /> Profile
-                </MenuItem>
-                <MenuItem>
-                    <Avatar /> My account
+
+                <MenuItem onClick={() => navigate("/dashboard/Profile")}>
+                    <Avatar src=". " /> My Account
                 </MenuItem>
                 <Divider />
-                <MenuItem>
-                    <ListItemIcon>
-                        <PersonAdd fontSize="small" />
-                    </ListItemIcon>
-                    Add another account
-                </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
                         <Settings fontSize="small" />
@@ -94,6 +93,7 @@ const User = () => {
                     Logout
                 </MenuItem>
             </Menu>
+            <Loading {...{ openLoading, setOpenLoading }} />
         </>
     )
 }

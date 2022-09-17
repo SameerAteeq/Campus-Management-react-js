@@ -74,7 +74,7 @@ const Sidebar = ({ open, setOpen }) => {
 
                     {list.map((item) => (
                         <Tooltip title={!open ? item.tooltip : ""} >
-                            <ListItem key={item.title} disablePadding sx={{ display: 'block' }}>
+                            <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
                                 <ListItemButton
                                     sx={{
                                         minHeight: 48,

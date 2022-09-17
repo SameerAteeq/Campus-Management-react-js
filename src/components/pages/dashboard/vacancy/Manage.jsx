@@ -1,47 +1,49 @@
 import { Delete, Edit } from '@mui/icons-material'
 import { Box, Divider, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from '@mui/material'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const rows = [
     {
         id: 1,
         title: "Php developer",
         salary: 45000,
-        Openings: 20,
+        jobType: "Part time",
     },
     {
         id: 2,
         title: "React developer",
         salary: 50000,
-        Openings: 25,
+        jobType: "Full time",
     },
     {
         id: 3,
         title: "Python developer",
         salary: 40000,
-        Openings: 22,
+        jobType: "Part time",
     },
     {
         id: 4,
         title: "Node developer",
         salary: 70000,
-        Openings: 30,
+        jobType: "Full time",
     },
 ]
 
 const Manage = () => {
+    const navigate = useNavigate();
     return (
-        <Box sx={{ backgroundColor: "#fff", padding: { xs: "5px", sm: "10px", lg: "20px" } }}>
+        <Box sx={{ backgroundColor: "#fff", padding: { xs: "5px", sm: "10px", lg: "20px" }, width: "100%", height: "100vh" }}>
             <Typography variant='h4' sx={{ mb: "10px", color: '#333' }}>POSTED JOBS</Typography>
             <Divider color="#00bfa5" flexItem sx={{ borderWidth: 1, mb: 2 }} />
             <Box sx={{ marginTop: "30px" }}>
                 <TableContainer component={Paper} >
-                    <Table sx={{ minWidth: 350 }} aria-label="simple table">
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead sx={{ backgroundColor: "#ddd" }} >
                             <TableRow >
                                 <TableCell  >Job Title</TableCell>
                                 <TableCell align='right'>Salary</TableCell>
-                                <TableCell align='right'>Openeing</TableCell>
+                                <TableCell align='right'>Job Type</TableCell>
                                 <TableCell align='right'>Action</TableCell>
                             </TableRow>
                         </TableHead>
@@ -52,12 +54,13 @@ const Manage = () => {
                                     key={row.id}
                                     hover
                                 >
-                                    <TableCell component="th" scope="row"
+                                    <TableCell onClick={() => navigate("/dashboard/Vacancy")}
+                                        sx={{ fontWeight: "bold", color: "GrayText", cursor: "pointer" }}
                                     >
                                         {row.title}
                                     </TableCell>
                                     <TableCell align='right'>${row.salary}</TableCell>
-                                    <TableCell align='right'>{row.Openings}</TableCell>
+                                    <TableCell align='right'>{row.jobType}</TableCell>
                                     <TableCell align='right' >
                                         <Tooltip title="Edit Job">
                                             <IconButton>

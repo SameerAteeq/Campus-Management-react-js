@@ -9,6 +9,7 @@ import PostVacancy from "../components/pages/dashboard/vacancy/PostVacancy";
 export const list =
     [
         {
+            id: 1,
             title: "Main",
             icon: <Dashboard />,
             link: "",
@@ -16,6 +17,7 @@ export const list =
             tooltip: "Dashboard"
         },
         {
+            id: 2,
             title: "Profile",
             icon: < Person />,
             link: "Profile",
@@ -23,6 +25,7 @@ export const list =
             tooltip: "Profile"
         },
         {
+            id: 3,
             title: "Add Vacancy",
             icon: <PostAdd />,
             link: "Vacancy",
@@ -30,6 +33,7 @@ export const list =
             tooltip: "Add Vacancy"
         },
         {
+            id: 4,
             title: "Manage Vacancy",
             icon: <Leaderboard />,
             link: "Manage",
@@ -37,6 +41,7 @@ export const list =
             tooltip: "Manage Vacancy"
         },
         {
+            id: 5,
             title: "Candidates",
             icon: <Group />,
             link: "Candidate_list",
@@ -44,6 +49,7 @@ export const list =
             tooltip: "Candidate"
         },
         {
+            id: 6,
             title: "Search Job",
             icon: <ManageSearch />,
             link: "search_job",
@@ -51,6 +57,7 @@ export const list =
             tooltip: "Search Job"
         },
         {
+            id: 7,
             title: "Candidates",
             icon: <Group />,
             link: "Candidate_list",

@@ -1,5 +1,5 @@
 import { ArrowBack, Work } from '@mui/icons-material';
-import { Box, Button, Divider, LinearProgress, Stack, Tooltip, Typography } from '@mui/material'
+import { Box, Button, Divider, IconButton, LinearProgress, Stack, Tooltip, Typography } from '@mui/material'
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -23,7 +23,7 @@ const CandidateProfile = () => {
                     Candidate Profile
                 </Typography>
                 <Tooltip title="back to Dashboard">
-                    <Button size="small" variant="contained" startIcon={<ArrowBack />} onClick={() => navigate(-1)}>Back</Button>
+                    <IconButton size="small" onClick={() => navigate(-1)}><ArrowBack /></IconButton>
                 </Tooltip>
             </Stack>
             <Divider color="#00bfa5" flexItem sx={{ borderWidth: 1, color: "#00bfa5", mb: 2 }} />

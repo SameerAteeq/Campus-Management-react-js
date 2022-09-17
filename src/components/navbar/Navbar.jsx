@@ -3,12 +3,12 @@ import { Box, Divider, Drawer, IconButton, List, Button, ListItem, ListItemText,
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from 'react';
-import { Context } from '../../context/Context';
+import { UserContext } from '../../context/Context';
 import toast from 'react-hot-toast';
 import User from '../user/User';
 const drawerWidth = 240;
 const Navbar = (props) => {
-    const { currentUser, dispatch } = useContext(Context);
+    const { currentUser, dispatch } = useContext(UserContext);
     console.log(currentUser, "user")
     const navigate = useNavigate();
     const navItems = [

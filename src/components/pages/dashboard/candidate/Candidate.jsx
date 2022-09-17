@@ -14,7 +14,7 @@ const Candidate = () => {
             <Divider color="#00bfa5" flexItem sx={{ borderWidth: 1, color: "#00bfa5", mb: 2 }} />
             <Grid container>
                 <Grid item xs={12} lg={12}>
-                    <Stack direction="row" gap={2} flexWrap="wrap" justifyContent="space-between" alignItems="center" sx={{ backgroundColor: "#fcf6f6dd", padding: "15px" }}>
+                    <Stack direction="row" gap={2} flexWrap="wrap" alignItems="center" sx={{ backgroundColor: "#fcf6f6dd", padding: "15px" }}>
                         <Stack direction="row" justifyContent="center" gap={2} flexWrap="wrap" >
                             <img src='/candidate.jpg' height={150} />
                             <Stack direction="column" justifyContent="center" alignItems="center" gap={1}>
@@ -29,16 +29,13 @@ const Candidate = () => {
                                 </Stack>
                             </Stack>
                         </Stack>
-                        <Stack direction="column" >
-                            <Button variant='contained' size="small" onClick={() => navigate("/candidate")} >View Profile</Button>
-                        </Stack>
                     </Stack>
 
                 </Grid>
                 <Divider />
 
             </Grid>
-        </Box>
+        </Box >
     )
 }
 

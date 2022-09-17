@@ -13,6 +13,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { Toaster } from 'react-hot-toast';
 import CandidateProfile from './components/pages/dashboard/candidate/CandidateProfile'
+import JobInfo from './components/pages/dashboard/JobInfo/JobInfo'
+import PrivateRoutes from './route/PrivateRoutes'
 
 const App = () => {
 
@@ -28,11 +30,12 @@ const App = () => {
               <Route path='/jobs' element={<Jobs />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/login' element={<Login />} />
+            </Route>
+            <Route element={<PrivateRoutes />}>
+              <Route path='/dashboard/*' element={<Dashboard />} />
+              <Route path='/job_info' element={<JobInfo />} />
               <Route path='/candidate' element={<CandidateProfile />} />
             </Route>
-            <Route path='/dashboard/*' element={<Dashboard />} >
-            </Route>
-
           </Routes>
         </ThemeProvider>
       </LocalizationProvider>

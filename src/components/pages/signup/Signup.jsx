@@ -28,7 +28,7 @@ const Signup = () => {
             confirmPassword: "",
             address: "",
             role: "",
-            file: "",
+            // file: "",
         },
         validationSchema: signupValidation,
         onSubmit: async values => {
@@ -37,11 +37,11 @@ const Signup = () => {
             }
             try {
                 setOpenLoading(true);
-                const ImgUrl = await ImageUploader(values["file"]);
-                delete values["file"];
+                // const ImgUrl = await ImageUploader(values["file"]);
+                // delete values["file"];
                 const resp = await createUserWithEmailAndPassword(auth, values.email, values.password)
                 await setDoc(doc(db, "users", resp.user.uid), {
-                    ...values, ImgUrl,
+                    ...values,
                 });
                 navigate("/login");
                 toast.success("Account created successfully");
@@ -68,7 +68,7 @@ const Signup = () => {
                     </Typography>
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={2}  >
-                            <Grid item xs={12} lg={11}>
+                            {/* <Grid item xs={12} lg={11}>
                                 <Stack direction="row" alignItems="flex-end" >
                                     <img alt='user Image' src={values.file ? URL.createObjectURL(values.file) : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
                                     <Button variant='text' component="label" >
@@ -79,7 +79,7 @@ const Signup = () => {
                                             hidden type="file" />
                                     </Button>
                                 </Stack>
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={12} lg={11}>
                                 <TextField
                                     type="text"

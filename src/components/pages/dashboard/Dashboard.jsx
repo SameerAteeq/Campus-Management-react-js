@@ -11,7 +11,7 @@ import Sidebar from './sidebar/Sidebar';
 import { Tooltip } from '@mui/material';
 import { Home } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
-
+import User from "../../user/User"
 
 const drawerWidth = 240;
 
@@ -60,9 +60,10 @@ export default function Dashboard() {
                             <Home />
                         </IconButton>
                     </Tooltip>
-                    <Typography variant="h6" noWrap component={Link} to="/dashboard" sx={{ color: "#333", textDecoration: "none" }}>
+                    <Typography variant="h6" noWrap component={Link} to="/dashboard" sx={{ color: "#333", textDecoration: "none", flexGrow: 1 }}>
                         Dashboard
                     </Typography>
+                    <User />
                 </Toolbar>
             </AppBar>
             <Sidebar {...{ open, setOpen }} />
