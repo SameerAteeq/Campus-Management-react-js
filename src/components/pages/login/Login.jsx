@@ -8,10 +8,10 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { UserContext } from '../../../context/Context';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../../../firebase';
-import Loading from '../../loading/Loading';
 import { toast } from 'react-hot-toast';
 import { useContext } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
+import Loading from '../../common/loading/Loading';
 const Login = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);

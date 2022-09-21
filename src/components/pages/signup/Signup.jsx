@@ -10,7 +10,7 @@ import { auth, db } from "../../../firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { ImageUploader } from "../../../api";
 import { toast } from "react-hot-toast";
-import Loading from '../../loading/Loading';
+import Loading from "../../common/loading/Loading";
 
 const Signup = () => {
     const navigate = useNavigate();

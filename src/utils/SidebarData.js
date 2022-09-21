@@ -14,7 +14,8 @@ export const list =
             icon: <Dashboard />,
             link: "",
             components: <Main />,
-            tooltip: "Dashboard"
+            tooltip: "Dashboard",
+            show: ["candidate", "Employee", "Admin"]
         },
         {
             id: 2,
@@ -22,7 +23,8 @@ export const list =
             icon: < Person />,
             link: "Profile",
             components: <Profile />,
-            tooltip: "Profile"
+            tooltip: "Profile",
+            show: ["candidate", "Employee", "Admin"]
         },
         {
             id: 3,
@@ -30,7 +32,8 @@ export const list =
             icon: <PostAdd />,
             link: "Vacancy",
             components: <PostVacancy />,
-            tooltip: "Add Vacancy"
+            tooltip: "Add Vacancy",
+            show: ["Employee"]
         },
         {
             id: 4,
@@ -38,7 +41,8 @@ export const list =
             icon: <Leaderboard />,
             link: "Manage",
             components: <Manage />,
-            tooltip: "Manage Vacancy"
+            tooltip: "Manage Vacancy",
+            show: ["Employee", "Admin"]
         },
         {
             id: 5,
@@ -46,7 +50,8 @@ export const list =
             icon: <Group />,
             link: "Candidate_list",
             components: <Candidate />,
-            tooltip: "Candidate"
+            tooltip: "Candidate",
+            show: ["Employee", "Admin"]
         },
         {
             id: 6,
@@ -54,7 +59,8 @@ export const list =
             icon: <ManageSearch />,
             link: "search_job",
             components: <JobSearch />,
-            tooltip: "Search Job"
+            tooltip: "Search Job",
+            show: ["candidate"]
         },
         {
             id: 7,
@@ -62,6 +68,7 @@ export const list =
             icon: <Group />,
             link: "Candidate_list",
             components: <Candidate />,
-            tooltip: "Candidate"
+            tooltip: "Candidate",
+            show: ["candidate", "Employee", "Admin"]
         },
     ]

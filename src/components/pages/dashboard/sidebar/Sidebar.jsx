@@ -1,7 +1,9 @@
 import { Divider, List, ListItem, ListItemButton, Box, Typography, ListItemIcon, ListItemText, styled, Tooltip } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
+import { useContext } from 'react';
 import { useMemo, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../../../context/Context';
 import { list } from "../../../../utils/SidebarData"
 
 const drawerWidth = 240;
@@ -51,13 +53,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 );
 const Sidebar = ({ open, setOpen }) => {
-    const [opencoll, setOpenColl] = useState(true);
-
-    const handleClick = () => {
-        setOpenColl(!open);
-    };
-    const [selectedLink, setSelectedLink] = useState('');
     const navigate = useNavigate();
+    const { currentUser } = useContext(UserContext);
+    const allowPermission = (roles, user) => {
+        return roles?.includes(user?.role)
+    }
 
 
 
@@ -72,40 +72,45 @@ const Sidebar = ({ open, setOpen }) => {
                 <Divider />
                 <List>
 
-                    {list.map((item) => (
-                        <Tooltip title={!open ? item.tooltip : ""} >
-                            <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
-                                    }}
-                                    onClick={() => navigate(item.link)}
-                                >
-                                    <ListItemIcon
+                    {list.map((item) => {
+                        if (allowPermission(item.show, currentUser.role)) return null;
+                        return (
+                            <Tooltip key={item.id} title={!open ? item.tooltip : ""} >
+                                <ListItem disablePadding sx={{ display: 'block' }}>
+                                    <ListItemButton
                                         sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
-                                            color: "grey"
+                                            minHeight: 48,
+                                            justifyContent: open ? 'initial' : 'center',
+                                            px: 2.5,
                                         }}
+                                        onClick={() => navigate(item.link)}
                                     >
-                                        {item.icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={item.title} sx={{ opacity: open ? 1 : 0, color: "#333", fontSize: "24px" }} />
-                                </ListItemButton>
-                            </ListItem>
-                        </Tooltip>
-                    ))}
+                                        <ListItemIcon
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: open ? 3 : 'auto',
+                                                justifyContent: 'center',
+                                                color: "grey"
+                                            }}
+                                        >
+                                            {item.icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={item.title} sx={{ opacity: open ? 1 : 0, color: "#333", fontSize: "24px" }} />
+                                    </ListItemButton>
+                                </ListItem>
+                            </Tooltip>
+                        )
+                    })}
                 </List>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: { xs: 1, md: 2 } }}>
                 <DrawerHeader />
                 <Routes>
-                    {list.map((item) => (
-                        <Route key={item.title} path={item.link} element={item.components} />
-                    ))}
+                    {list.map((item) => {
+                        return (
+                            <Route key={item.title} path={item.link} element={item.components} />
+                        )
+                    })}
                 </Routes>
             </Box>
         </>

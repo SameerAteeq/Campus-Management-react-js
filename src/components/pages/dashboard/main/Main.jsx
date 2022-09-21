@@ -2,9 +2,10 @@ import { BarChart, Group } from '@mui/icons-material'
 import { Box, Grid, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { useContext } from 'react'
-import { UserContext } from '../../../../context/Context';
+import { JobContext, UserContext } from '../../../../context/Context';
 const Main = () => {
     const { currentUser } = useContext(UserContext);
+    const { jobdata } = useContext(JobContext);
     return (
         <>
             <Typography variant='h6' sx={{ mb: "20px" }}>
@@ -16,7 +17,7 @@ const Main = () => {
                         <BarChart sx={{ fontSize: { xs: "60px", md: "70px", lg: "90px" }, color: "#00bfa5" }} />
                         <Box>
                             <Typography variant='h5' sx={{ color: "#444", fontWeight: "bold" }}>Total Posts</Typography>
-                            <Typography align='center' sx={{ color: "#333333", fontWeight: "bold" }} >2</Typography>
+                            <Typography align='center' sx={{ color: "#333333", fontWeight: "bold" }} >{jobdata.length}</Typography>
                         </Box>
                     </Stack>
                 </Grid>

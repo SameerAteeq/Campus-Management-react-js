@@ -1,72 +1,25 @@
 import { Delete, Edit, Search } from '@mui/icons-material'
 import { Box, Divider, IconButton, InputAdornment, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Tooltip, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AllPostedJobs } from '../../../../api'
+import { JobContext } from '../../../../context/Context'
 
-const rows = [
-    {
-        id: 1,
-        title: "Php developer",
-        location: "Lawrence, KS, USA",
-        jobType: "Part time",
-        vacancy: 4
-    },
-    {
-        id: 2,
-        title: "React developer",
-        location: "East Palo Alto, California",
-        jobType: "Full time",
-        vacancy: 5
-    },
-    {
-        id: 3,
-        title: "Python developer",
-        location: "Platte City, Missouri",
-        jobType: "Part time",
-        vacancy: 7
-    },
-    {
-        id: 4,
-        title: "Node developer",
-        location: "San Francisco",
-        jobType: "Full time",
-        vacancy: 3
-    },
-    {
-        id: 5,
-        title: "Express Js developer",
-        location: "Leavenworth, Kansas",
-        jobType: "Full time",
-        vacancy: 8
-    },
-    {
-        id: 6,
-        title: "Wordpress developer",
-        location: "Platte City, Missouri",
-        jobType: "Part time",
-        vacancy: 6
-    },
-    {
-        id: 7,
-        title: "MERN developer",
-        location: "San Francisco",
-        jobType: "Full time",
-        vacancy: 13
-    },
-]
+
 const JobSearch = () => {
+    const { allJobdata, setAllJobData } = useContext(JobContext);
     const navigate = useNavigate()
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
     const [searchField, setSearchField] = useState("");
-    const [filterData, setFilterData] = useState(rows);
+    const [filterData, setFilterData] = useState(allJobdata);
     useEffect(() => {
-        const NewFilter = rows.filter((data) => {
+        const NewFilter = allJobdata.filter((data) => {
             return data.title.toLowerCase().includes(searchField)
         });
         setFilterData(NewFilter)
-    }, [rows, searchField])
+    }, [allJobdata, searchField])
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -75,7 +28,16 @@ const JobSearch = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+    useEffect(() => {
+        const getAllJobs = async () => {
+            const allCompanyJobs = await AllPostedJobs();
+            setAllJobData(allCompanyJobs);
+            console.log(allCompanyJobs, "allCompanyJobs")
+        }
+        getAllJobs();
+    }, [])
 
+    console.log(allJobdata, "fil")
     return (
         <>
             <Box sx={{ backgroundColor: "#fff", padding: { xs: "5px", sm: "10px", lg: "20px" } }}>
@@ -115,9 +77,9 @@ const JobSearch = () => {
                                             {row.title}
                                         </TableCell>
                                         <TableCell align='center'>{row.location}</TableCell>
-                                        <TableCell align='center'>{row.jobType}</TableCell>
+                                        <TableCell align='center'>{row.jobtype}</TableCell>
                                         <TableCell align='center' >
-                                            {row.vacancy}
+                                            {row.opening}
                                         </TableCell>
 
                                     </TableRow>
@@ -126,7 +88,7 @@ const JobSearch = () => {
                             <TableFooter>
                                 <TablePagination
                                     rowsPerPageOptions={[5, 10, 15]}
-                                    count={rows.length}
+                                    count={allJobdata.length}
                                     rowsPerPage={rowsPerPage}
                                     page={page}
                                     onPageChange={handleChangePage}

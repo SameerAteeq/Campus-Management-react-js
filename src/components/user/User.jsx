@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../context/Context'
-import Loading from '../loading/Loading'
+import Loading from '../common/loading/Loading'
 
 const User = () => {
     const navigate = useNavigate();
@@ -36,7 +36,7 @@ const User = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                 >
-                    <Avatar src='.' sx={{ width: 32, height: 32 }} />
+                    <Avatar src={currentUser.imgUrl} sx={{ width: 32, height: 32 }} />
                 </IconButton>
             </Tooltip>
             <Menu
@@ -77,7 +77,7 @@ const User = () => {
             >
 
                 <MenuItem onClick={() => navigate("/dashboard/Profile")}>
-                    <Avatar src=". " /> My Account
+                    <Avatar src={currentUser.imgUrl} /> {currentUser.name}
                 </MenuItem>
                 <Divider />
                 <MenuItem>

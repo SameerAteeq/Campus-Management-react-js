@@ -9,25 +9,28 @@ import { doc, setDoc } from "firebase/firestore";
 import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { ImageUploader } from "../../../../api"
 const Profile = () => {
     const [loading, setLoading] = useState(false);
     const { currentUser } = useContext(UserContext);
 
-    const { values, handleBlur, handleChange, handleSubmit, errors, touched } = useFormik({
+    const { values, handleBlur, handleChange, handleSubmit, errors, touched, setFieldValue } = useFormik({
         initialValues: {
             name: currentUser ? currentUser?.name : "",
             email: currentUser ? currentUser?.email : "",
             address: currentUser ? currentUser?.address : "",
             password: currentUser ? currentUser?.password : "",
             confirmPassword: currentUser ? currentUser?.confirmPassword : "",
-
+            file: currentUser ? currentUser?.file : ""
         },
         enableReinitialize: true,
         // validationSchema: LoginValidation,
         onSubmit: async values => {
             setLoading(true);
             const docRef = doc(db, "users", currentUser.id);
-            const res = await setDoc(docRef, { ...values }, { merge: true });
+            const imgUrl = await ImageUploader(values["file"]);
+            delete values["file"];
+            const res = await setDoc(docRef, { ...values, imgUrl }, { merge: true });
             setLoading(false);
             toast.success("Profile Updated successfully")
             // const res = await doc2.update({ name: values.name, email: values.email });
@@ -45,6 +48,18 @@ const Profile = () => {
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Grid container spacing={2} rowSpacing={4}>
+                            <Grid item xs={12} lg={11}>
+                                <Stack direction="row" alignItems="flex-end" >
+                                    <img alt='user Image' src={values.file ? URL.createObjectURL(values.file) : currentUser.imgUrl} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
+                                    <Button variant='text' component="label" >
+                                        {currentUser.imgUrl ? "Edit profile" : "Upload profile"}
+                                        <input
+                                            name='file'
+                                            onChange={(e) => setFieldValue("file", e.target.files[0])}
+                                            hidden type="file" />
+                                    </Button>
+                                </Stack>
+                            </Grid>
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     type="text"

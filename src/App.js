@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Mainheader from './components/mainheader/Mainheader'
 import About from './components/pages/about/About'
@@ -10,35 +10,39 @@ import { theme } from './components/theme/theme'
 import { ThemeProvider } from '@mui/material'
 import Dashboard from './components/pages/dashboard/Dashboard'
 import { LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { Toaster } from 'react-hot-toast';
 import CandidateProfile from './components/pages/dashboard/candidate/CandidateProfile'
 import JobInfo from './components/pages/dashboard/JobInfo/JobInfo'
 import PrivateRoutes from './route/PrivateRoutes'
-
+import { JobContext } from './context/Context'
 const App = () => {
+  const [jobdata, setJobData] = useState([])
+  const [allJobdata, setAllJobData] = useState([])
 
   return (
     <BrowserRouter>
       <Toaster />
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route path='/' element={<Mainheader />} >
-              <Route index element={<Home />} />
-              <Route path='/about' element={<About />} />
-              <Route path='/jobs' element={<Jobs />} />
-              <Route path='/signup' element={<Signup />} />
-              <Route path='/login' element={<Login />} />
-            </Route>
-            <Route element={<PrivateRoutes />}>
-              <Route path='/dashboard/*' element={<Dashboard />} />
-              <Route path='/job_info' element={<JobInfo />} />
-              <Route path='/candidate' element={<CandidateProfile />} />
-            </Route>
-          </Routes>
-        </ThemeProvider>
-      </LocalizationProvider>
+      <JobContext.Provider value={{ jobdata, setJobData, allJobdata, setAllJobData }}>
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <ThemeProvider theme={theme}>
+            <Routes>
+              <Route path='/' element={<Mainheader />} >
+                <Route index element={<Home />} />
+                <Route path='/about' element={<About />} />
+                <Route path='/jobs' element={<Jobs />} />
+                <Route path='/signup' element={<Signup />} />
+                <Route path='/login' element={<Login />} />
+              </Route>
+              <Route element={<PrivateRoutes />}>
+                <Route path='/dashboard/*' element={<Dashboard />} />
+                <Route path='/job_info' element={<JobInfo />} />
+                <Route path='/candidate' element={<CandidateProfile />} />
+              </Route>
+            </Routes>
+          </ThemeProvider>
+        </LocalizationProvider>
+      </JobContext.Provider>
     </BrowserRouter >
   )
 }

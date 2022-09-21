@@ -1,6 +1,6 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase";
-
+import { db, storage } from "../firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 export const ImageUploader = async (file) => {
     console.log(file, "file")
     try {
@@ -11,4 +11,23 @@ export const ImageUploader = async (file) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+export const postedJobs = async (userId) => {
+    const q = query(collection(db, "jobs"), where("createdBy", "==", userId));
+    const querySnapshot = await getDocs(q);
+    let list = [];
+    querySnapshot.forEach((doc) => {
+        list.push({ id: doc.id, ...doc.data() })
+    });
+    return list;
+}
+
+export const AllPostedJobs = async () => {
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    let jobList = []
+    querySnapshot.forEach((doc) => {
+        jobList.push({ id: doc.id, ...doc.data() })
+    });
+    return jobList;
 }

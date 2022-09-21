@@ -1,5 +1,6 @@
 import { Typography, Box, Grid, Button } from '@mui/material'
 import React from 'react'
+import Jobs from '../jobs/Jobs'
 
 const Home = () => {
     return (
@@ -21,8 +22,8 @@ const Home = () => {
                 <Grid item xs={12} sm={6}>
                     <img src='images/home.png' width="100%" height="100%" />
                 </Grid>
-
             </Grid>
+            <Jobs />
         </Box>
 
 

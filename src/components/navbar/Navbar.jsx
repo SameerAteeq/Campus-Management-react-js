@@ -9,7 +9,6 @@ import User from '../user/User';
 const drawerWidth = 240;
 const Navbar = (props) => {
     const { currentUser, dispatch } = useContext(UserContext);
-    console.log(currentUser, "user")
     const navigate = useNavigate();
     const navItems = [
         {

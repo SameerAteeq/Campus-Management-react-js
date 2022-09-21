@@ -1,8 +1,9 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import Reducer from "./Reducer";
 const INITIAL_VALUE = {
     currentUser: JSON.parse(localStorage.getItem("user") || null)
 }
+export const JobContext = createContext();
 export const UserContext = createContext(INITIAL_VALUE);
 export const UserContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(Reducer, INITIAL_VALUE);
