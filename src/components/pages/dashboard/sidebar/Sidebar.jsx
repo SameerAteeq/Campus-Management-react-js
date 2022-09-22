@@ -73,7 +73,7 @@ const Sidebar = ({ open, setOpen }) => {
                 <List>
 
                     {list.map((item) => {
-                        if (allowPermission(item.show, currentUser.role)) return null;
+                        if (allowPermission(item.show, "candidate")) return null;
                         return (
                             <Tooltip key={item.id} title={!open ? item.tooltip : ""} >
                                 <ListItem disablePadding sx={{ display: 'block' }}>

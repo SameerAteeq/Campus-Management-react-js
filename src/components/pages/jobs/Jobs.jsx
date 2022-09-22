@@ -2,10 +2,13 @@ import { Key } from '@mui/icons-material'
 import { Box, Button, Grid, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AllPostedJobs } from '../../../api'
-import { JobContext } from '../../../context/Context'
+import { JobContext, UserContext } from '../../../context/Context'
 
 const Jobs = () => {
+    const navigate = useNavigate();
+    const { currentUser } = useContext(UserContext);
     const { allJobdata, setAllJobData } = useContext(JobContext);
     useEffect(() => {
         const getAllJobs = async () => {
@@ -27,7 +30,7 @@ const Jobs = () => {
                             <Typography variant="p"><span style={{ color: "gray", fontWeight: "bold" }}>Openings :</span> {item.opening}</Typography>
                             <Typography variant="p"><span style={{ color: "gray", fontWeight: "bold" }}>Location :</span> {item.location}</Typography>
                             <Typography variant="p"><span style={{ color: "gray", fontWeight: "bold" }}>Last Date to Apply :</span> {item.lastDate}</Typography>
-                            <Button variant='contained' size="small" sx={{ width: "50px", textAlign: "center" }}>Apply</Button>
+                            <Button variant='contained' size="small" sx={{ width: "50px", textAlign: "center" }} onClick={() => navigate(currentUser ? "/jobs/application_form" : "/login")} >Apply</Button>
                         </Box>
                     </Grid>
 

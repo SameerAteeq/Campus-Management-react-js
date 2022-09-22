@@ -44,7 +44,7 @@ const Manage = () => {
                                 </TableRow>
                             </TableHead>
 
-                            <TableBody>
+                            <TableBody sx={{ overflow: "scroll" }}>
                                 {jobdata.map((row) => (
                                     <TableRow
                                         key={row.id}

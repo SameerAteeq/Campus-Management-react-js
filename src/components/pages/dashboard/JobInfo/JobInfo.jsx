@@ -23,7 +23,7 @@ const JobInfo = () => {
                             <Work sx={{ fontSize: "16px", color: "#333" }} />
                             <Typography variant="p" sx={{ color: "#333" }} >Full Time</Typography>
                         </Stack>
-                        <Typography component={Link} to="/login" sx={{ color: "#00bfa5" }}>Apply Now</Typography>
+                        <Typography component={Link} to="/jobs/application_form" sx={{ color: "#00bfa5" }}>Apply Now</Typography>
                     </Stack>
                     <Divider />
                     <Box>

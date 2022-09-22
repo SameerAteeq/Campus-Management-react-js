@@ -32,12 +32,10 @@ const JobSearch = () => {
         const getAllJobs = async () => {
             const allCompanyJobs = await AllPostedJobs();
             setAllJobData(allCompanyJobs);
-            console.log(allCompanyJobs, "allCompanyJobs")
         }
         getAllJobs();
     }, [])
 
-    console.log(allJobdata, "fil")
     return (
         <>
             <Box sx={{ backgroundColor: "#fff", padding: { xs: "5px", sm: "10px", lg: "20px" } }}>

@@ -16,6 +16,7 @@ import CandidateProfile from './components/pages/dashboard/candidate/CandidatePr
 import JobInfo from './components/pages/dashboard/JobInfo/JobInfo'
 import PrivateRoutes from './route/PrivateRoutes'
 import { JobContext } from './context/Context'
+import JobForm from './components/pages/jobs/applicationform/JobForm'
 const App = () => {
   const [jobdata, setJobData] = useState([])
   const [allJobdata, setAllJobData] = useState([])
@@ -33,6 +34,7 @@ const App = () => {
                 <Route path='/jobs' element={<Jobs />} />
                 <Route path='/signup' element={<Signup />} />
                 <Route path='/login' element={<Login />} />
+                <Route path='jobs/application_form' element={<JobForm />} />
               </Route>
               <Route element={<PrivateRoutes />}>
                 <Route path='/dashboard/*' element={<Dashboard />} />

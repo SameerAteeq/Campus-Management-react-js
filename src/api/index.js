@@ -31,3 +31,13 @@ export const AllPostedJobs = async () => {
     });
     return jobList;
 }
+
+export const allCandidates = async (userRole) => {
+    const q = query(collection(db, "users"), where("role", "==", userRole));
+    const querySnapshot = await getDocs(q);
+    let Candidatelist = [];
+    querySnapshot.forEach((doc) => {
+        Candidatelist.push({ id: doc.id, ...doc.data() })
+    });
+    return Candidatelist;
+}

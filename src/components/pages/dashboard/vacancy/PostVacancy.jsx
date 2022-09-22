@@ -14,8 +14,6 @@ import Loading from '../../../common/loading/Loading';
 const PostVacancy = () => {
     const { currentUser } = useContext(UserContext);
     const [openLoading, setOpenLoading] = useState(false);
-    const [value, setValue] = useState(null);
-    const defaultValue = value ? value : new Date();
     const ProductsValidation = Yup.object({
         title: Yup.string().required("required"),
         salary: Yup.string().required("required"),

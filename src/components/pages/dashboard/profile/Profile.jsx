@@ -1,5 +1,5 @@
 import { async } from '@firebase/util'
-import { Box, Button, Divider, Grid, InputLabel, TextField, Typography } from '@mui/material'
+import { Box, Button, Divider, Grid, InputLabel, MenuItem, OutlinedInput, TextField, Typography, useTheme } from '@mui/material'
 import { Stack } from '@mui/system'
 import { useFormik } from 'formik'
 import React, { useContext } from 'react'
@@ -10,7 +10,29 @@ import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { ImageUploader } from "../../../../api"
+import { allSkills } from '../../../../utils/programskills'
+
+function getStyles(name, values, theme) {
+    return {
+        fontWeight:
+            values.skills.indexOf(name) === -1
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium,
+    };
+}
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
+
 const Profile = () => {
+    const theme = useTheme();
     const [loading, setLoading] = useState(false);
     const { currentUser } = useContext(UserContext);
 
@@ -21,7 +43,8 @@ const Profile = () => {
             address: currentUser ? currentUser?.address : "",
             password: currentUser ? currentUser?.password : "",
             confirmPassword: currentUser ? currentUser?.confirmPassword : "",
-            file: currentUser ? currentUser?.file : ""
+            file: currentUser ? currentUser?.file : "",
+            // skills: currentUser ? currentUser?.skill : [],
         },
         enableReinitialize: true,
         // validationSchema: LoginValidation,
@@ -99,6 +122,38 @@ const Profile = () => {
                                     fullWidth
                                 />
                             </Grid>
+                            {/* {currentUser.role === "candidate" &&
+                                <Grid item xs={12} md={6}>
+                                    <TextField
+                                        select
+                                        name='skills'
+                                        value={values.skills}
+                                        error={touched.skills && Boolean(errors.skills)}
+                                        onChange={(event) => {
+                                            const {
+                                                target: { value },
+                                            } = event;
+                                            handleChange({ target: { name: "skills", value: typeof value === 'string' ? value.split(',') : value, } })
+                                        }}
+                                        onBlur={handleBlur}
+                                        helperText={touched.skills && errors.skills}
+                                        label="skills"
+                                        fullWidth
+                                        multiple
+                                        MenuProps={MenuProps}
+                                    >
+                                        {allSkills.map((name) => (
+                                            <MenuItem
+                                                key={name}
+                                                value={name}
+                                                style={getStyles(name, values, theme)}
+                                            >
+                                                {name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Grid>
+                            } */}
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     type="text"
