@@ -1,5 +1,5 @@
 import { LocationCity, LocationOn } from '@mui/icons-material'
-import { Box, Button, Divider, Grid, Typography } from '@mui/material'
+import { Box, Button, Divider, Grid, List, ListItem, ListItemText, Menu, MenuItem, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
@@ -35,10 +35,15 @@ const Candidate = () => {
                                 </Box>
                                 <Stack direction="column" justifyContent="center" gap={1}>
                                     <Typography variant='h6' component={Link} to="/candidate" sx={{ color: "#333" }}>{item.name}</Typography>
-                                    <Stack direction="row" gap={1} >
-                                        <Typography variant='p' sx={{ backgroundColor: "#e9e5e5", padding: "6px", borderRadius: "6px", color: "gray" }}>Node js</Typography>
-                                        <Typography variant='p' sx={{ backgroundColor: "#e9e5e5", padding: "6px", borderRadius: "6px", color: "gray" }}>Express js</Typography>
-                                    </Stack>
+                                    <List >
+                                        <ListItem>
+                                            <ListItemText>
+
+                                                <Typography variant='p' sx={{ backgroundColor: "#e9e5e5", padding: "6px", borderRadius: "6px", color: "gray" }}>{item.skills}</Typography>
+                                            </ListItemText>
+                                        </ListItem>
+                                        {/* <Typography variant='p' sx={{ backgroundColor: "#e9e5e5", padding: "6px", borderRadius: "6px", color: "gray" }}>Express js</Typography> */}
+                                    </List>
                                     <Stack direction="row" alignItems="center">
                                         <LocationOn sx={{ color: "#00bfa5" }} />
                                         <Typography variant='p' >{item.address}</Typography>

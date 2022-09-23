@@ -44,7 +44,7 @@ const Profile = () => {
             password: currentUser ? currentUser?.password : "",
             confirmPassword: currentUser ? currentUser?.confirmPassword : "",
             file: currentUser ? currentUser?.file : "",
-            // skills: currentUser ? currentUser?.skill : [],
+            skills: [],
         },
         enableReinitialize: true,
         // validationSchema: LoginValidation,
@@ -122,7 +122,7 @@ const Profile = () => {
                                     fullWidth
                                 />
                             </Grid>
-                            {/* {currentUser.role === "candidate" &&
+                            {currentUser.role === "candidate" &&
                                 <Grid item xs={12} md={6}>
                                     <TextField
                                         select
@@ -139,21 +139,21 @@ const Profile = () => {
                                         helperText={touched.skills && errors.skills}
                                         label="skills"
                                         fullWidth
-                                        multiple
-                                        MenuProps={MenuProps}
+                                        SelectProps={{
+                                            multiple: true
+                                        }}
                                     >
                                         {allSkills.map((name) => (
                                             <MenuItem
                                                 key={name}
                                                 value={name}
-                                                style={getStyles(name, values, theme)}
                                             >
                                                 {name}
                                             </MenuItem>
                                         ))}
                                     </TextField>
                                 </Grid>
-                            } */}
+                            }
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     type="text"
