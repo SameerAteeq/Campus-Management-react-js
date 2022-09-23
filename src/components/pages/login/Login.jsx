@@ -57,7 +57,7 @@ const Login = () => {
     return (
         <Box >
             <Grid container justifyContent="center" alignItems="center" padding={2}>
-                <Grid item xs={12} sm={12} md={6} sx={{ display: { xs: "none", sm: "block" } }}>
+                <Grid item xs={12} sm={12} md={6} sx={{ display: { xs: "none", sm: "none", md: "block", lg: "block" } }}>
                     <img src='images/login.png' width="100%" height="100%" />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} >

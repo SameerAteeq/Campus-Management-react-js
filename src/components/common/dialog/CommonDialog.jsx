@@ -7,10 +7,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 export default function CommonDialog({ openDialog, setOpenDialog }) {
 
-    const handleClickOpen = () => {
-        setOpenDialog(true);
-    };
-
     const handleClose = () => {
         setOpenDialog(false);
     };
@@ -19,8 +15,8 @@ export default function CommonDialog({ openDialog, setOpenDialog }) {
         <div>
 
             <Dialog
-                open={openDialog}
-                onClose={handleClose}
+                open={openDialog.isOpen}
+                onClose={openDialog.isOpen}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -34,8 +30,8 @@ export default function CommonDialog({ openDialog, setOpenDialog }) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={handleClose} autoFocus>
+                    <Button onClick={() => setOpenDialog({ ...openDialog, isOpen: false })}>Disagree</Button>
+                    <Button onClick={openDialog.onCinfirm} >
                         Agree
                     </Button>
                 </DialogActions>

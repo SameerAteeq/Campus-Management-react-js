@@ -57,7 +57,7 @@ const Signup = () => {
     return (
         <Box>
             <Grid container justifyContent="center" alignItems="center" >
-                <Grid item xs={12} sm={12} md={6} sx={{ display: { sm: "none", md: "none", lg: "block" } }}>
+                <Grid item xs={12} sm={12} md={6} sx={{ display: { xs: "none", sm: "none", md: "block", lg: "block" } }}>
                     <img src='images/signup.png' width="100%" height="100%" />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} sx={{ padding: { xs: "10px" } }}>

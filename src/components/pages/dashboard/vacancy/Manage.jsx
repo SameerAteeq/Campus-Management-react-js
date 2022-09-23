@@ -4,17 +4,19 @@ import React from 'react'
 import { useContext } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import { postedJobs } from '../../../../api'
+import { deleteJob, postedJobs } from '../../../../api'
 import { JobContext, UserContext } from '../../../../context/Context'
 import CommonDialog from '../../../common/dialog/CommonDialog'
 import Empty from '../../../common/empty/Empty'
-
+import Loading from '../../../common/loading/Loading'
 
 
 const Manage = () => {
-    const [openDialog, setOpenDialog] = useState(false);
+    const [openDialog, setOpenDialog] = useState({ isOpen: false });
     const { jobdata, setJobData } = useContext(JobContext);
+    const [openLoading, setOpenLoading] = useState(false)
     const navigate = useNavigate();
     const { currentUser } = useContext(UserContext);
     useEffect(() => {
@@ -24,8 +26,21 @@ const Manage = () => {
         }
         getData();
     }, [])
+
+    const handleDel = async (id) => {
+        try {
+            setOpenLoading(true);
+            await deleteJob(id);
+            setJobData(jobdata.filter((j) => j.id !== id))
+            setOpenLoading(false);
+            toast.success("Job deleted successfully")
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
-        <Box sx={{ backgroundColor: "#fff", padding: { xs: "5px", sm: "10px", lg: "20px" }, width: "100%", height: "100vh" }}>
+        <Box sx={{ backgroundColor: "#fff", padding: { xs: "5px", sm: "10px", lg: "20px" }, height: "95vh", }}>
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", flexWrap: "wrap", padding: "10px" }}>
                 <Typography variant='h4' sx={{ color: '#333' }}>POSTED JOBS</Typography>
                 <Button variant="contained" onClick={() => navigate("/Dashboard/Vacancy")} >Post Jobs</Button>
@@ -33,8 +48,8 @@ const Manage = () => {
             <Divider color="#00bfa5" flexItem sx={{ borderWidth: 1, mb: 2 }} />
             {jobdata.length ?
                 <Box sx={{ marginTop: "30px" }}>
-                    <TableContainer component={Paper} >
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableContainer component={Paper} sx={{ overflowX: "scroll" }}  >
+                        <Table sx={{ minWidth: 650, overflowX: "scroll" }} aria-label="simple table">
                             <TableHead sx={{ backgroundColor: "#ddd" }} >
                                 <TableRow >
                                     <TableCell  >Job Title</TableCell>
@@ -44,7 +59,7 @@ const Manage = () => {
                                 </TableRow>
                             </TableHead>
 
-                            <TableBody sx={{ overflow: "scroll" }}>
+                            <TableBody >
                                 {jobdata.map((row) => (
                                     <TableRow
                                         key={row.id}
@@ -64,7 +79,11 @@ const Manage = () => {
                                                 </IconButton>
                                             </Tooltip>
                                             <Tooltip title="Delete Job">
-                                                <IconButton onClick={() => setOpenDialog(true)} >
+                                                <IconButton onClick={() => setOpenDialog({
+                                                    ...openDialog,
+                                                    isOpen: true,
+                                                    onCinfirm: () => { handleDel(row.id) }
+                                                })} >
                                                     <Delete />
                                                 </IconButton>
                                             </Tooltip>
@@ -86,8 +105,10 @@ const Manage = () => {
                         </Table>
                     </TableContainer>
                     <CommonDialog {...{ openDialog, setOpenDialog }} />
-                </Box> : <Empty />}
-        </Box>
+                    <Loading {...{ openLoading, setOpenLoading }} />
+                </Box> : <Empty />
+            }
+        </Box >
     )
 }
 

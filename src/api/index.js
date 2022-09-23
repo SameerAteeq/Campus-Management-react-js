@@ -1,6 +1,6 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
 export const ImageUploader = async (file) => {
     console.log(file, "file")
     try {
@@ -40,4 +40,8 @@ export const allCandidates = async (userRole) => {
         Candidatelist.push({ id: doc.id, ...doc.data() })
     });
     return Candidatelist;
+}
+
+export const deleteJob = async (jobId) => {
+    await deleteDoc(doc(db, "jobs", jobId));
 }
