@@ -35,8 +35,8 @@ const Jobs = () => {
             <Typography variant='h3' align='center' sx={{ fontWeight: "bold", color: "#444", margin: "10px" }}>ALL JOBS</Typography>
             <Grid container spacing={2} padding={1} >
                 {allJobdata.map((item) => (
-                    <Grid key={item.id} item xs={12} sm={6} md={5} lg={4}>
-                        <StyleBox >
+                    <Grid key={item.id} item xs={12} sm={6} md={5} lg={4} >
+                        <StyleBox onClick={() => navigate(`/job_info/${item?.id}`)} >
                             <Typography align="center" variant='h5' sx={{ fontWeight: "bold", color: "#333" }}>{item.title}</Typography>
                             <Typography variant="p"><span style={{ color: "gray", fontWeight: "bold" }}>Description :</span> {item.description}</Typography>
                             <Typography variant="p"><span style={{ color: "gray", fontWeight: "bold" }}>Job Type :</span> {item.jobtype}</Typography>

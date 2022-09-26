@@ -20,26 +20,25 @@ const Candidate = () => {
         getCandidatelist()
     }, [])
     return (
-        <Box sx={{ backgroundColor: "#fff", padding: { xs: "5px", sm: "10px", lg: "20px" } }}>
+        <Box sx={{ backgroundColor: "#fff", padding: { xs: "5px", sm: "10px", lg: "20px" } }} >
             <Typography variant='h4' sx={{ mb: "10px", color: '#333' }}>
                 Candidates List
             </Typography>
             <Divider color="#00bfa5" flexItem sx={{ borderWidth: 1, color: "#00bfa5", mb: 2 }} />
             <Grid container>
                 {candidateUser.map((item) => (
-                    <Grid item xs={12} lg={12}>
+                    <Grid key={item.id} item xs={12} lg={12} onClick={() => navigate(`/candidate/${item?.id}`)} sx={{ cursor: "pointer" }}>
                         <Stack direction="row" gap={2} flexWrap="wrap" alignItems="center" sx={{ backgroundColor: "#fcf6f6dd", padding: "15px" }}>
                             <Stack direction="row" gap={3} flexWrap="wrap" >
                                 <Box sx={{ width: "120px", height: "120px" }}>
                                     <img src={item.imgUrl} alt="user Image" height="100%" width="100%" />
                                 </Box>
                                 <Stack direction="column" justifyContent="center" gap={1}>
-                                    <Typography variant='h6' component={Link} to="/candidate" sx={{ color: "#333" }}>{item.name}</Typography>
+                                    <Typography variant='h6' onClick={() => navigate(`/candidate/${item?.id}`)} sx={{ color: "#333" }}>{item.name}</Typography>
                                     <List >
                                         <ListItem>
                                             <ListItemText>
-
-                                                <Typography variant='p' sx={{ backgroundColor: "#e9e5e5", padding: "6px", borderRadius: "6px", color: "gray" }}>{item.skills}</Typography>
+                                                <Typography variant='p' sx={{ backgroundColor: "#e9e5e5", padding: "6px", borderRadius: "6px", color: "gray" }}> {item.skills} </Typography>
                                             </ListItemText>
                                         </ListItem>
                                         {/* <Typography variant='p' sx={{ backgroundColor: "#e9e5e5", padding: "6px", borderRadius: "6px", color: "gray" }}>Express js</Typography> */}
@@ -51,7 +50,6 @@ const Candidate = () => {
                                 </Stack>
                             </Stack>
                         </Stack>
-
                         <Divider />
                     </Grid>
                 ))}

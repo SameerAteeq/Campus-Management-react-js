@@ -39,7 +39,9 @@ const App = () => {
               <Route element={<PrivateRoutes />}>
                 <Route path='/dashboard/*' element={<Dashboard />} />
                 <Route path='/job_info' element={<JobInfo />} />
+                <Route path='/job_info/:jobId' element={<JobInfo />} />
                 <Route path='/candidate' element={<CandidateProfile />} />
+                <Route path='/candidate/:candidateId' element={<CandidateProfile />} />
               </Route>
             </Routes>
           </ThemeProvider>

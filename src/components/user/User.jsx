@@ -1,5 +1,5 @@
 import { Logout, PersonAdd, Settings } from '@mui/icons-material'
-import { Avatar, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material'
+import { Avatar, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useContext } from 'react'
 import toast from 'react-hot-toast'

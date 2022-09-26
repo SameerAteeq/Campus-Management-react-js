@@ -69,7 +69,7 @@ const JobSearch = () => {
                                         key={row.id}
                                         hover
                                     >
-                                        <TableCell onClick={() => navigate("/job_info")}
+                                        <TableCell onClick={() => navigate(`/job_info/${row?.id}`)}
                                             sx={{ fontWeight: "bold", color: "GrayText", cursor: "pointer" }}
                                         >
                                             {row.title}

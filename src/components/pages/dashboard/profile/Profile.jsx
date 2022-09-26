@@ -12,24 +12,7 @@ import toast from 'react-hot-toast'
 import { ImageUploader } from "../../../../api"
 import { allSkills } from '../../../../utils/programskills'
 
-function getStyles(name, values, theme) {
-    return {
-        fontWeight:
-            values.skills.indexOf(name) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
-    };
-}
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
+
 
 const Profile = () => {
     const theme = useTheme();
@@ -44,7 +27,7 @@ const Profile = () => {
             password: currentUser ? currentUser?.password : "",
             confirmPassword: currentUser ? currentUser?.confirmPassword : "",
             file: currentUser ? currentUser?.file : "",
-            skills: [],
+            skills: []
         },
         enableReinitialize: true,
         // validationSchema: LoginValidation,

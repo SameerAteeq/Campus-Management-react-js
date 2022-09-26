@@ -1,6 +1,6 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../firebase";
-import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDocs, deleteDoc, doc, getDoc } from "firebase/firestore";
 export const ImageUploader = async (file) => {
     console.log(file, "file")
     try {
@@ -44,4 +44,26 @@ export const allCandidates = async (userRole) => {
 
 export const deleteJob = async (jobId) => {
     await deleteDoc(doc(db, "jobs", jobId));
+}
+
+export const getJob = async (jobId) => {
+    const docRef = doc(db, "jobs", jobId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        console.log("No such document!");
+    }
+}
+
+export const getCandidate = async (candidateId) => {
+    const candidateRef = doc(db, "users", candidateId);
+    const docSnap = await getDoc(candidateRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data()
+    } else {
+        console.log("No such document!");
+    }
 }

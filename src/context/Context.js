@@ -1,5 +1,19 @@
 import { createContext, useEffect, useReducer, useState } from "react";
 import Reducer from "./Reducer";
+
+
+// export const getCurrentUser = async () => {
+//     const docRef = doc(db, "cities", "SF");
+//     const docSnap = await getDoc(docRef);
+//     const currentUser = docSnap.data();
+//     if (docSnap.exists()) {
+
+//     } else {
+//         // doc.data() will be undefined in this case
+//         console.log("No such document!");
+//     }
+// }
+
 const INITIAL_VALUE = {
     currentUser: JSON.parse(localStorage.getItem("user") || null)
 }

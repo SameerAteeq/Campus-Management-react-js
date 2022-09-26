@@ -1,9 +1,36 @@
 import { ArrowBack, ArrowRightAlt, Work } from '@mui/icons-material'
-import { Box, Button, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, Tooltip, Typography } from '@mui/material'
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Box, Button, CircularProgress, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, Tooltip, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { getJob } from '../../../../api'
+import NewLoader from '../../../common/loading/NewLoader'
 const JobInfo = () => {
     const navigate = useNavigate()
+    const { jobId } = useParams();
+    console.log("pa", jobId);
+    const [loader, setloader] = useState(false);
+    const [jobData, setjobData] = useState(null);
+
+    useEffect(() => {
+        const getJobDetails = async () => {
+            try {
+                setloader(true);
+                const data = await getJob(jobId);
+                setjobData(data);
+                setloader(false);
+            } catch (error) {
+                console.log("job", error)
+            }
+        }
+        getJobDetails()
+    }, [jobId])
+
+    console.log("jobData", jobData)
+
+    if (loader) {
+        return <NewLoader />;
+    }
+
     return (
         <>
             <Box sx={{ backgroundColor: "aliceblue", padding: { xs: "5px", sm: "10px", lg: "20px" }, width: "100%", height: "100vh" }}>
@@ -18,10 +45,10 @@ const JobInfo = () => {
                 <Divider color="#00bfa5" flexItem sx={{ borderWidth: 1, color: "#00bfa5", mb: 2 }} />
                 <Stack direction="column" gap={2} padding={1}>
                     <Stack direction="column" gap={1}>
-                        <Typography variant='h4' sx={{ color: "#292727", fontWeight: "bold" }}>Php Developer</Typography>
+                        <Typography variant='h4' sx={{ color: "#292727", fontWeight: "bold" }}>{jobData?.title}</Typography>
                         <Stack direction="row" gap={1}>
                             <Work sx={{ fontSize: "16px", color: "#333" }} />
-                            <Typography variant="p" sx={{ color: "#333" }} >Full Time</Typography>
+                            <Typography variant="p" sx={{ color: "#333" }} >{jobData?.jobtype}</Typography>
                         </Stack>
                         <Typography component={Link} to="/jobs/application_form" sx={{ color: "#00bfa5" }}>Apply Now</Typography>
                     </Stack>
@@ -38,13 +65,7 @@ const JobInfo = () => {
                             <ListItem>
                                 <ArrowRightAlt />
                                 <ListItemText>
-                                    Proficient in Photoshop, Illustrator, bonus points for familiarity with Sketch (Sketch is our preferred concepting tool).
-                                </ListItemText>
-                            </ListItem>
-                            <ListItem>
-                                <ArrowRightAlt />
-                                <ListItemText>
-                                    Minimun three year experience
+                                    {jobData?.description}
                                 </ListItemText>
                             </ListItem>
                         </List>
@@ -74,7 +95,6 @@ const JobInfo = () => {
                         </List>
                     </Box>
                 </Stack>
-
             </Box>
         </>
     )

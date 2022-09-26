@@ -16,7 +16,7 @@ export default function CommonDialog({ openDialog, setOpenDialog }) {
 
             <Dialog
                 open={openDialog.isOpen}
-                onClose={openDialog.isOpen}
+                onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >

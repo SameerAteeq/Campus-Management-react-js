@@ -37,7 +37,7 @@ const AppBar = styled(MuiAppBar, {
 export default function Dashboard() {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
-    ;
+
 
     return (
         <Box sx={{ display: 'flex', backgroundColor: "aliceblue", height: "100vh", width: "100%" }}>
