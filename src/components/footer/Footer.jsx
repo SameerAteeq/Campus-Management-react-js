@@ -9,7 +9,7 @@ const Footer = () => {
   const navigate = useNavigate();
   const { currentUser} = useContext(UserContext);
   return (
-    <Stack gap={2} sx={{p:"12px",width:"100%",color:"#ffff",  height:"120px", backgroundColor:"#00bfa5"}}>
+    <Stack gap={2} sx={{p:"12px",width:"100%",color:"#ffff", height:"120px", backgroundColor:"#00bfa5"}}>
            <Stack  direction={"row"} justifyContent={"center"} alignItems={"center"} gap={2}>
             <Facebook sx={{cursor:"pointer"}}/>
             <Twitter sx={{cursor:"pointer"}}/>

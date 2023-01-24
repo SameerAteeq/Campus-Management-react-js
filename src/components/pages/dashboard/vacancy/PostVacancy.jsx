@@ -37,7 +37,6 @@ const PostVacancy = () => {
         },
         validationSchema: ProductsValidation,
         onSubmit: async values => {
-            console.log(values, "values");
             setOpenLoading(true);
             const id = ulid();
             const createdBy = currentUser.id

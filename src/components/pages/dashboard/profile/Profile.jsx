@@ -34,7 +34,6 @@ const Profile = () => {
         enableReinitialize: true,
         // validationSchema: LoginValidation,
         onSubmit: async (values) => {
-            console.log("values", values);
             setLoading(true);
             // console.log("res", res)
 
@@ -63,7 +62,6 @@ const Profile = () => {
                 //     ...values,
                 // });
                 // debugger
-                console.log("res", res)
                 setLoading(false);
             } catch (err) {
                 setLoading(false);

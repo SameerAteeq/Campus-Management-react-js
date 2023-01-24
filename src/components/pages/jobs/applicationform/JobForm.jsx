@@ -15,7 +15,6 @@ import Loading from '../../../common/loading/Loading';
 const JobForm = () => {
     const navigate = useNavigate();
     const { jobId } = useParams();
-    console.log(jobId, "id")
     const { currentUser } = useContext(UserContext);
     const [openLoading, setOpenLoading] = useState(false);
     const JobformValidation = Yup.object().shape({
@@ -39,7 +38,6 @@ const JobForm = () => {
         },
         validationSchema: JobformValidation,
         onSubmit: async values => {
-            console.log(values, "values");
             setOpenLoading(true);
             const id = ulid();
             const userId = currentUser.id;

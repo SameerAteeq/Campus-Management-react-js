@@ -33,7 +33,7 @@ const Signup = () => {
         validationSchema: signupValidation,
         onSubmit: async values => {
             if (values.password !== values.confirmPassword) {
-                return toast.error("Password and Confirm Password are dfferent");
+                return toast.error("Password and Confirm Password should be same");
             }
             try {
                 setOpenLoading(true);

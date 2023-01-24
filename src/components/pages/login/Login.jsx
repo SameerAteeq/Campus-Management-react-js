@@ -33,11 +33,9 @@ const Login = () => {
             signInWithEmailAndPassword(auth, values.email, values.password)
                 .then(async (userCredential) => {
                     const userResp = userCredential.user;
-                    console.log("userResp", userResp)
                     const docRef = doc(db, "users", userResp.uid);
                     const docSnap = await getDoc(docRef);
                     const fetchSingleUser = docSnap.data();
-                    console.log("data", fetchSingleUser);
                     const userData = {
                         id: userResp.uid,
                         ...fetchSingleUser
@@ -46,10 +44,16 @@ const Login = () => {
                     setOpenLoading(false);
                     navigate("/Dashboard");
                     toast.success("Account successfully Login");
-                    console.log("user", fetchSingleUser);
                 })
                 .catch((error) => {
-                    console.log(error)
+                    if(error.code ==="auth/user-not-found"){
+                        toast.error("User not found")
+                        
+                    }else if(error.code==="auth/wrong-password"){
+                        toast.error("Incorrect password")
+                    }else{
+                        toast.error(error.code);
+                    }
                     setOpenLoading(false);
                 });
         }

@@ -14,7 +14,6 @@ const Jobs = () => {
     const[visible,setVisible]= useState(false);
     const { currentUser } = useContext(UserContext);
     const { allJobdata, setAllJobData } = useContext(JobContext);
-    console.log(allJobdata,"all")
     useEffect(() => {
         const getAllJobs = async () => {
             const allCompanyJobs = await AllPostedJobs();
@@ -45,7 +44,7 @@ const Jobs = () => {
             </Box>
             <Typography sx={{color:"#333",mb:"20px"}} align='center' variant='h6'>All jobs are posted with their deadline</Typography>
                 {allJobdata.length >0 ? 
-            <Grid container spacing={2} padding={1} >
+            <Grid container spacing={2} padding={1} sx={{display:"flex", justifyContent:"center"}}>
                 {allJobdata?.slice(0,visible? allJobdata.lengt: 6)?.map((item) => (
                     <Grid key={item.id} item xs={12} sm={6} md={5} lg={4} >
                         <StyleBox className='container' >

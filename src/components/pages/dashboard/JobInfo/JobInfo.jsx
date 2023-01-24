@@ -18,7 +18,7 @@ const JobInfo = () => {
                 setjobData(data);
                 setloader(false);
             } catch (error) {
-                console.log("job", error)
+                console.log( error)
             }
         }
         getJobDetails()

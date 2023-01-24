@@ -5,9 +5,7 @@ import { useContext } from 'react'
 import { JobContext, UserContext } from '../../../../context/Context';
 const Main = () => {
     const { currentUser } = useContext(UserContext);
-    console.log(currentUser, "userin dashboard")
     const { jobdata } = useContext(JobContext);
-    console.log(jobdata, "datajob")
     return (
         <>
             <Typography variant='h6' sx={{ mb: "20px" }}>
