@@ -5,10 +5,10 @@ import Footer from '../footer/Footer'
 const Contact = () => {
   return (
     <Box sx={{p:"10px"}}>
-      <Box sx={{textAlign:"center", display:"flex", justifyContent:"center",}}>
-            <Typography variant='h3' align='center' sx={{ fontWeight: "bold", color: "#444",  textAlign:"center",borderBottom:"3px solid #00bfa5"}}>GET IN TOUCH</Typography>
+      <Box sx={{textAlign:"center", display:"flex", alignItems:"center", justifyContent:"center", mb:"10px"}}>
+            <Typography variant='h3' align='center' sx={{ fontWeight: "bold", color: "#444",  textAlign:"center",borderBottom:"3px solid #00bfa5",marginBottom:"10px"}}>GET IN TOUCH</Typography>
         </Box>
-        <Grid container justifyContent="center" alignItems="center"  spacing={1}>
+        <Grid container justifyContent="center" alignItems="center"  spacing={1} sx={{mt:"10px"}}>
             <Grid item xs={12} sm={6}>
                <form>
                 <Stack gap={2}>

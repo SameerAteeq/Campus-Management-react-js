@@ -132,7 +132,7 @@ const Navbar = (props) => {
                             )
                         })}
                         {currentUser ?
-                            <User /> : <Button sx={{ color: '#fff' }} onClick={() => navigate("/login")}>
+                            <User /> : <Button sx={{backgroundColor:`${active ==="Login"? " #03282b7c":null}`,"&:hover":{backgroundColor:"#03282bdf"}, color:"#fff"}}  onClick={() => {setActive("Login");navigate("/login")}}>
                                 Login
                             </Button>
                         }
