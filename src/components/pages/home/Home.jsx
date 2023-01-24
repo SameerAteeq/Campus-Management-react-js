@@ -1,10 +1,14 @@
-import { Typography, Box, Grid, Button } from '@mui/material'
+import { Typography, Box, Grid, Button, Stack } from '@mui/material'
 import React from 'react'
+import About from '../../about/About'
+import Contact from '../../contact/Contact'
+import Footer from '../../footer/Footer'
 import Jobs from '../jobs/Jobs'
 
 const Home = () => {
     return (
-        <Box >
+        <>
+        <Stack direction={"column"} gap={4} p={1} >
             <Grid container justifyContent="center" alignItems="center" padding={2} spacing={2}>
                 <Grid item xs={12} sm={6}>
                     <Grid container spacing={1}>
@@ -23,9 +27,12 @@ const Home = () => {
                     <img src='images/home.png' width="100%" height="100%" />
                 </Grid>
             </Grid>
+            <About/>
             <Jobs />
-        </Box>
-
+            <Contact/>
+        </Stack>
+            {/* <Footer/> */}
+            </>
 
     )
 }

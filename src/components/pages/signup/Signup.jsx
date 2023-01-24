@@ -124,7 +124,7 @@ const Signup = () => {
                                                     onClick={() => setShowPassword(!showPassword)}
                                                     edge="end"
                                                 >
-                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    {showPassword ?  <Visibility /> : <VisibilityOff />}
                                                 </IconButton>
                                             </InputAdornment>
 
@@ -149,7 +149,7 @@ const Signup = () => {
                                                     onClick={() => setShowConfPassword(!showConfPassword)}
                                                     edge="end"
                                                 >
-                                                    {showConfPassword ? <VisibilityOff /> : <Visibility />}
+                                                    {showConfPassword ? <Visibility /> : <VisibilityOff />}
                                                 </IconButton>
                                             </InputAdornment>
 

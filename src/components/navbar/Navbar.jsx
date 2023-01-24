@@ -1,48 +1,60 @@
 import AppBar from '@mui/material/AppBar';
 import { Box, Divider, Drawer, IconButton, List, Button, ListItem, ListItemText, ListItemButton, ListItemIcon, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from 'react';
+import {Link, useNavigate } from "react-router-dom";
+import { useContext, useRef, useState } from 'react';
 import { UserContext } from '../../context/Context';
 import toast from 'react-hot-toast';
 import User from '../user/User';
 const drawerWidth = 240;
+export const navItems = [
+    {
+        id: 1,
+        title: "Home",
+        to: "/",
+        private: false
+    },
+    {
+        id: 2,
+        title: "Dashboard",
+        to: `/dashboard`,
+        private: true
+    },
+
+    {
+        id: 3,
+        title: "Jobs",
+        to: `/jobs`,
+        private: false
+    },
+    {
+        id: 4,
+        title: "Contact",
+        to: `/contact`,
+        private: false
+    },
+    {
+        id: 5,
+        title: "About",
+        to: `/about`,
+        private: false
+    },
+]
 const Navbar = (props) => {
+    const services = useRef(null);
+    const blog = useRef(null);
+    const contact = useRef(null);
+  
+    const scrollToSection = (elementRef) => {
+      window.scrollTo({
+        top: elementRef.current.offsetTop,
+        behavior: "smooth",
+      });
+    };
+    const [active,setActive]= useState("Home")
     const { currentUser, dispatch } = useContext(UserContext);
     const navigate = useNavigate();
-    const navItems = [
-        {
-            id: 1,
-            title: "Home",
-            to: "/",
-            private: false
-        },
-        {
-            id: 2,
-            title: "Dashboard",
-            to: `/dashboard`,
-            private: true
-        },
-
-        {
-            id: 3,
-            title: "Jobs",
-            to: `/jobs`,
-            private: false
-        },
-        // {
-        //     id: 4,
-        //     title: "Login",
-        //     to: `/login`,
-        //     private: false,
-        // },
-        // {
-        //     id: 5,
-        //     title: "Logout",
-        //     to: `/login`,
-        //     private: true,
-        // },
-    ]
+   
 
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -65,9 +77,9 @@ const Navbar = (props) => {
                 {navItems.map((item) => {
                     if (item.private && !currentUser) return
                     return (
-                        <ListItem key={item.id} disablePadding>
+                        <ListItem sx={{backgroundColor:`${active ===item.title? " #03282b7c":null}`, textAlign:"center"}} onClick={()=>setActive(item.title)} key={item.id} disablePadding>
                             <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate(item.to)}>
-                                <ListItemText primary={item.title} />
+                                <ListItemText  primary={item.title} />
                             </ListItemButton>
                         </ListItem>)
                 })}
@@ -97,7 +109,7 @@ const Navbar = (props) => {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
+                        sx={{ mr: 2, display: { sm: 'none' } ,color:"#fff"}}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -114,8 +126,7 @@ const Navbar = (props) => {
                         {navItems.map((item) => {
                             if (item.private && !currentUser) return
                             return (
-
-                                <Button key={item.id} sx={{ color: '#fff' }} onClick={() => navigate(item.to)}>
+                                <Button key={item.id} sx={{backgroundColor:`${active ===item.title? " #03282b7c":null}`,"&:hover":{backgroundColor:"#03282bdf"}, color:"#fff",mr:"6px"}} onClick={()=>{setActive(item.title);navigate(item.to)} }>
                                     {item.title}
                                 </Button>
                             )
@@ -123,7 +134,8 @@ const Navbar = (props) => {
                         {currentUser ?
                             <User /> : <Button sx={{ color: '#fff' }} onClick={() => navigate("/login")}>
                                 Login
-                            </Button>}
+                            </Button>
+                        }
                     </Box>
                 </Toolbar>
             </AppBar>

@@ -40,7 +40,7 @@ export default function Dashboard() {
 
 
     return (
-        <Box sx={{ display: 'flex', backgroundColor: "aliceblue", height: "100vh", width: "100%" }}>
+        <Box sx={{ display: 'flex', backgroundColor: "aliceblue" }}>
             <CssBaseline />
             <AppBar position="fixed" open={open} sx={{ backgroundColor: "aliceblue" }}>
                 <Toolbar>

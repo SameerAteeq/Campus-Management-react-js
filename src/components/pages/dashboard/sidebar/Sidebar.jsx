@@ -103,7 +103,7 @@ const Sidebar = ({ open, setOpen }) => {
                     })}
                 </List>
             </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, p: { xs: 1, md: 2 } }}>
+            <Box component="main" sx={{ flexGrow: 1, p: { xs: 1, md: 2 }, backgroundColor: "aliceblue", height: "100vh" }}>
                 <DrawerHeader />
                 <Routes>
                     {list.map((item) => {

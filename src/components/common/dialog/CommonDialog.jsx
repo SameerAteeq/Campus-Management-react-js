@@ -23,16 +23,16 @@ export default function CommonDialog({ openDialog, setOpenDialog }) {
                 <DialogTitle id="alert-dialog-title">
                     {"Do You want to delete this Job?"}
                 </DialogTitle>
-                <DialogContent>
+                {/* <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Let Google help apps determine location. This means sending anonymous
                         location data to Google, even when no apps are running.
                     </DialogContentText>
-                </DialogContent>
+                </DialogContent> */}
                 <DialogActions>
-                    <Button onClick={() => setOpenDialog({ ...openDialog, isOpen: false })}>Disagree</Button>
+                    <Button variant='contained' onClick={() => setOpenDialog({ ...openDialog, isOpen: false })}>No</Button>
                     <Button onClick={openDialog.onCinfirm} >
-                        Agree
+                        Yes
                     </Button>
                 </DialogActions>
             </Dialog>

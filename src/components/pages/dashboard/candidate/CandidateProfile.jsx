@@ -78,15 +78,15 @@ const CandidateProfile = () => {
 
                         <Typography variant='p'>Node js</Typography>
                         <Box sx={{ width: '70%', m: { xs: "10px", } }}>
-                            <LinearProgress variant='determinate' value={level} />
+                            <LinearProgress variant='determinate' value={55} />
                         </Box>
                         <Typography variant='p'>Express js</Typography>
                         <Box sx={{ width: '70%', m: { xs: "10px", } }}>
-                            <LinearProgress variant='determinate' value={level} />
+                            <LinearProgress variant='determinate' value={89} />
                         </Box>
                         <Typography variant='p'>React js</Typography>
                         <Box sx={{ width: '70%', m: { xs: "10px", } }}>
-                            <LinearProgress variant='determinate' value={level} />
+                            <LinearProgress variant='determinate' value={70} />
                         </Box>
                     </Box>
                 </Box>

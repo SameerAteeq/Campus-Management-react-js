@@ -1,5 +1,5 @@
 import { ArrowBack, ArrowRightAlt, Work } from '@mui/icons-material'
-import { Box, Button, CircularProgress, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, Tooltip, Typography } from '@mui/material'
+import { Box, Divider, IconButton, List, ListItem, ListItemText, Stack, Tooltip, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getJob } from '../../../../api'
@@ -7,7 +7,6 @@ import NewLoader from '../../../common/loading/NewLoader'
 const JobInfo = () => {
     const navigate = useNavigate()
     const { jobId } = useParams();
-    console.log("pa", jobId);
     const [loader, setloader] = useState(false);
     const [jobData, setjobData] = useState(null);
 
@@ -24,9 +23,6 @@ const JobInfo = () => {
         }
         getJobDetails()
     }, [jobId])
-
-    console.log("jobData", jobData)
-
     if (loader) {
         return <NewLoader />;
     }

@@ -4,13 +4,15 @@ import { Stack } from '@mui/system'
 import { useFormik } from 'formik'
 import React, { useContext } from 'react'
 import { UserContext } from '../../../../context/Context'
-import { db } from '../../../../firebase'
-import { doc, setDoc } from "firebase/firestore";
+import { db, storage } from '../../../../firebase'
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { ImageUploader } from "../../../../api"
 import { allSkills } from '../../../../utils/programskills'
+import { updateProfile } from 'firebase/auth'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 
 
 
@@ -26,22 +28,54 @@ const Profile = () => {
             address: currentUser ? currentUser?.address : "",
             password: currentUser ? currentUser?.password : "",
             confirmPassword: currentUser ? currentUser?.confirmPassword : "",
-            file: currentUser ? currentUser?.file : "",
-            skills: []
+            // file: currentUser?.imgUrl,
+            skills: currentUser ? currentUser?.skills : []
         },
         enableReinitialize: true,
         // validationSchema: LoginValidation,
-        onSubmit: async values => {
+        onSubmit: async (values) => {
+            console.log("values", values);
             setLoading(true);
-            const docRef = doc(db, "users", currentUser.id);
-            const imgUrl = await ImageUploader(values["file"]);
-            delete values["file"];
-            const res = await setDoc(docRef, { ...values, imgUrl }, { merge: true });
-            setLoading(false);
-            toast.success("Profile Updated successfully")
+            // console.log("res", res)
+
+            // delete values["file"];
+            // const imgUrl = await ImageUploader(values["file"]);
+            try {
+                // const storageRef = ref(storage, + values?.file.name);
+                // const uploadTask = uploadBytesResumable(storageRef, values?.file);
+
+                const docRef = doc(db, "users", currentUser.id);
+                // uploadTask.on('state_changed',
+
+                //     () => {
+                //         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                //             await updateProfile(currentUser, {
+                //                 photoURL: downloadURL
+                //             })
+                //         });
+                //     }
+                // )
+                const res = await updateDoc(docRef, {
+                    ...values
+
+                })
+                // const res = await setDoc(doc(db, "users", currentUser.uid), {
+                //     ...values,
+                // });
+                // debugger
+                console.log("res", res)
+                setLoading(false);
+            } catch (err) {
+                setLoading(false);
+                console.log(err.message)
+            }
+            // await setDoc(doc, { ...values, imgUrl }, { merge: true });
+            // setLoading(false);
+
+            // console.log(currentUser, "user")
+            // // const res = await setDoc(docRef, { ...values, imgUrl }, { merge: true });
+            // toast.success("Profile Updated successfully")
             // const res = await doc2.update({ name: values.name, email: values.email });
-            console.log("values", docRef)
-            console.log("res", res)
         }
     })
 
@@ -54,9 +88,9 @@ const Profile = () => {
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Grid container spacing={2} rowSpacing={4}>
-                            <Grid item xs={12} lg={11}>
+                            {/* <Grid item xs={12} lg={11}>
                                 <Stack direction="row" alignItems="flex-end" >
-                                    <img alt='user Image' src={values.file ? URL.createObjectURL(values.file) : currentUser.imgUrl} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
+                                    <img alt='user Image' src={values.imgUrl ? URL.createObjectURL(values.file) : currentUser?.imgUrl} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
                                     <Button variant='text' component="label" >
                                         {currentUser.imgUrl ? "Edit profile" : "Upload profile"}
                                         <input
@@ -65,7 +99,7 @@ const Profile = () => {
                                             hidden type="file" />
                                     </Button>
                                 </Stack>
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     type="text"
@@ -105,7 +139,7 @@ const Profile = () => {
                                     fullWidth
                                 />
                             </Grid>
-                            {currentUser.role === "candidate" &&
+                            {currentUser?.role === "candidate" &&
                                 <Grid item xs={12} md={6}>
                                     <TextField
                                         select
@@ -116,7 +150,7 @@ const Profile = () => {
                                             const {
                                                 target: { value },
                                             } = event;
-                                            handleChange({ target: { name: "skills", value: typeof value === 'string' ? value.split(',') : value, } })
+                                            handleChange({ target: { name: "skills", value: typeof value === 'string' ? value?.split(',') : value, } })
                                         }}
                                         onBlur={handleBlur}
                                         helperText={touched.skills && errors.skills}

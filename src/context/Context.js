@@ -25,7 +25,7 @@ export const UserContextProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(state.currentUser));
     }, [state.currentUser])
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("user"));
+        const users = JSON.parse(localStorage.getItem("user"));
         // if(user.id) {
         //     const docRef = doc(db, "users", user.uid);
         //     const docSnap = await getDoc(docRef);

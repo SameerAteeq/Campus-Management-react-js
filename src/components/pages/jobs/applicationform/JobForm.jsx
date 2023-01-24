@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useContext } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ulid } from 'ulid';
 import * as Yup from "yup"
 import { UserContext } from '../../../../context/Context';
@@ -13,7 +13,9 @@ import { db } from '../../../../firebase';
 import { allSkills } from '../../../../utils/programskills';
 import Loading from '../../../common/loading/Loading';
 const JobForm = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { jobId } = useParams();
+    console.log(jobId, "id")
     const { currentUser } = useContext(UserContext);
     const [openLoading, setOpenLoading] = useState(false);
     const JobformValidation = Yup.object().shape({

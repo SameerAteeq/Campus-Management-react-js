@@ -36,7 +36,7 @@ const User = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                 >
-                    <Avatar src={currentUser.imgUrl} sx={{ width: 32, height: 32 }} />
+                    <Avatar src={currentUser.imgUrl} sx={{ width: 32, height: 32, backgroundPosition: "center", backgroundSize: "cover" }} />
                 </IconButton>
             </Tooltip>
             <Menu

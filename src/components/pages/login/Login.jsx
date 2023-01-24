@@ -56,18 +56,18 @@ const Login = () => {
     })
     return (
         <Box >
-            <Grid container justifyContent="center" alignItems="center" padding={2}>
+            <Grid container justifyContent="center" alignItems="center" sx={{height:"100vh"}}>
                 <Grid item xs={12} sm={12} md={6} sx={{ display: { xs: "none", sm: "none", md: "block", lg: "block" } }}>
                     <img src='images/login.png' width="100%" height="100%" />
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} >
+                <Grid item xs={12} sm={12} md={6} sx={{ padding: { xs: "10px" } }} >
                     <Typography variant="h3"
                         sx={{ marginBottom: "10px", color: "gray", fontWeight: "bold" }}
                     >
                         Login
                     </Typography>
                     <form onSubmit={handleSubmit}>
-                        <Grid container spacing={1} >
+                        <Grid container spacing={2} height="100%"  >
                             <Grid item xs={12} >
                                 <TextField
                                     type="email"
